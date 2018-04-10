@@ -1,0 +1,8 @@
+{
+  "name": "amber-ui",
+  "app_id": "fa980516",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
