@@ -13,8 +13,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // These are all imports required for Pro Client with Monitoring & Deploy,
 // feel free to merge into existing imports above.
 import { Pro } from '@ionic/pro';
-import { GeoProvider } from '../providers/geo/geo';
+import { PlaceProvider } from '../providers/place/PlaceProvider';
 import {Geolocation} from "@ionic-native/geolocation";
+import {HTTP} from "@ionic-native/http";
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'
@@ -66,8 +67,9 @@ export class AmberErrorHandler implements ErrorHandler {
     SplashScreen,
     IonicErrorHandler,
     {provide: ErrorHandler, useClass: AmberErrorHandler},
-    GeoProvider,
-    Geolocation
+    PlaceProvider,
+    Geolocation,
+    HTTP
   ]
 })
 export class AppModule {
