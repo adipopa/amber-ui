@@ -1,0 +1,40 @@
+<!--
+  Generated template for the IntroPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row align-items-center>
+      <ion-col col-12>
+        <h2>Welcome to</h2>
+        <h1>Amber</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center class="center-content">
+      <ion-col col-12>
+        <p>Please login using one of the following options</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button color="secondary" (click)="onLoginByEmail()">Login by Email</button>
+      </ion-col>
+      <ion-col col-12>
+        <h4>or</h4>
+      </ion-col>
+      <ion-col col-12>
+        <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true">Sign in with Google</div>
+      </ion-col>
+      <ion-col col-12>
+        <p (click)="onCreateAccount()">Create an account using Email</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
