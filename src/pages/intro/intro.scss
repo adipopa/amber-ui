@@ -3,11 +3,23 @@ page-intro {
   ion-content {
     background-color: color($colors, primary, base) !important;
 
-    .scroll-content {
-      padding: 80px 16px !important;
+    div [ion-fixed] {
+      width: 100%;
 
       ion-grid {
         height: 100%;
+
+        .title-content {
+          margin-top: 40px;
+        }
+
+        .center-content {
+          height: calc(100vh - 342px);
+        }
+
+        .bottom-content {
+          margin-top: 8px;
+        }
 
         button, .g-signin2 {
           width: 100%;
@@ -16,10 +28,6 @@ page-intro {
         .g-signin2 > div{
           width: 100% !important;
           margin: 0 auto;
-        }
-
-        .center-content {
-          height: calc(100vh - 232px) !important;
         }
 
         h4, h2, h1, p {
