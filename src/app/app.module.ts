@@ -14,6 +14,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // feel free to merge into existing imports above.
 import { Pro } from '@ionic/pro';
 
+import {SocketIoConfig, SocketIoModule} from "ng-socket-io";
+import { MessagingProvider } from '../providers/messaging/messaging';
+import { EventProvider } from '../providers/event/event';
+import {HTTP} from "@ionic-native/http";
+
 Pro.init('fa980516', {
   appVersion: '0.0.1'
 });
@@ -39,6 +44,8 @@ export class AmberErrorHandler implements ErrorHandler {
   }
 }
 
+const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options: {}};
+
 @NgModule({
   declarations: [
     MyApp,
@@ -49,7 +56,8 @@ export class AmberErrorHandler implements ErrorHandler {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    SocketIoModule.forRoot(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -57,13 +65,16 @@ export class AmberErrorHandler implements ErrorHandler {
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    HTTP
   ],
   providers: [
     StatusBar,
     SplashScreen,
     IonicErrorHandler,
-    {provide: ErrorHandler, useClass: AmberErrorHandler}
+    {provide: ErrorHandler, useClass: AmberErrorHandler},
+    MessagingProvider,
+    EventProvider
   ]
 })
 export class AppModule {
