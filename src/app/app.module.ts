@@ -13,6 +13,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // These are all imports required for Pro Client with Monitoring & Deploy,
 // feel free to merge into existing imports above.
 import { Pro } from '@ionic/pro';
+import { PlaceProvider } from '../providers/place/PlaceProvider';
+import {Geolocation} from "@ionic-native/geolocation";
+import {HTTP} from "@ionic-native/http";
 
 import {SocketIoConfig, SocketIoModule} from "ng-socket-io";
 import { MessagingProvider } from '../providers/messaging/messaging';
@@ -73,6 +76,9 @@ const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options
     SplashScreen,
     IonicErrorHandler,
     {provide: ErrorHandler, useClass: AmberErrorHandler},
+    PlaceProvider,
+    Geolocation,
+    HTTP,
     MessagingProvider,
     EventProvider
   ]
