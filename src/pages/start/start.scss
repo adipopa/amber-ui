@@ -1,0 +1,39 @@
+page-start {
+
+  ion-content {
+    background-color: color($colors, primary, base) !important;
+
+    div [ion-fixed] {
+      height: 100%;
+      width: 100%;
+
+      ion-grid {
+        height: 100%;
+
+        ion-spinner {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        ion-spinner, ion-spinner * {
+          width: 48px;
+          height: 48px;
+        }
+
+        .title-content {
+          margin-top: 48px;
+        }
+
+        h1 {
+          color: #fff;
+          text-align: center;
+          font-size: 56px;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+}

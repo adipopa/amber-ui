@@ -3,7 +3,7 @@ import { NavController, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { IntroPage } from '../pages/intro/intro';
+import { StartPage } from '../pages/start/start';
 
 @Component({
   templateUrl: 'app.html'
@@ -11,7 +11,7 @@ import { IntroPage } from '../pages/intro/intro';
 export class AmberApp {
 
   @ViewChild('appNav') nav: NavController;
-  public rootPage: any = IntroPage;
+  public rootPage: any = StartPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

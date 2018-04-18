@@ -12,8 +12,13 @@ page-login {
 
           form {
 
-            .button-md {
+            .button-md[type="submit"] {
               width: 100%;
+              margin-top: 16px !important;
+            }
+
+            h4, p {
+              color: #fff;
             }
 
             h4 {
@@ -25,7 +30,14 @@ page-login {
               font-size: 14px;
               font-weight: 500;
               text-align: right;
-              margin: 6px 0 32px;
+              margin: 6px 0 16px;
+            }
+
+            p.error {
+              color: color($colors, danger, base);
+              font-size: 13px;
+              text-align: left;
+              margin: 0;
             }
           }
         }

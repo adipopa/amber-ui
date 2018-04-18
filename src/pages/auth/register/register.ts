@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController, NavParams } from 'ionic-angular';
+
+import { LoginPage } from '../login/login';
+
+import { AuthService } from '../auth.service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -17,9 +21,12 @@ export class RegisterPage {
 
   private registerForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+  private registerError = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private formBuilder: FormBuilder, private authService: AuthService) {
     this.registerForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
@@ -29,7 +36,18 @@ export class RegisterPage {
   }
 
   onRegister() {
-    console.log(this.registerForm.value)
+    const userDetails = this.registerForm.value;
+
+    this.authService.register(userDetails).subscribe(
+      (data: any) => {
+        this.navCtrl.pop();
+        this.navCtrl.push(LoginPage, userDetails);
+      },
+      (error: any) => {
+        this.registerError = true;
+      });
+
+    console.log(userDetails)
   }
 
 }

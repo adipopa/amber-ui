@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { RegisterPage } from '../auth/register/register';
-import { LoginPage } from '../auth/login/login';
+
+import { RegisterPage } from '../register/register';
+import { LoginPage } from '../login/login';
 
 /**
  * Generated class for the IntroPage page.

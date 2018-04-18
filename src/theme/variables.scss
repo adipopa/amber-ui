@@ -22,8 +22,6 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-$text-color: #fff;
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -55,11 +53,9 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-$toolbar-md-title-text-color: color($colors, light, base);
-$toolbar-md-title-font-size: 1.6rem;
-$toolbar-md-background: transparent;
-
 $button-md-background-color: color($colors, secondary, base);
+
+$toolbar-md-title-font-size: 1.6rem;
 
 $text-input-md-highlight-color: #fff;
 $text-input-md-input-clear-icon-color: #fff;
@@ -67,6 +63,8 @@ $label-md-text-color: #fff;
 $label-md-text-color-focused: #fff;
 
 $list-background-color: color($colors, primary, base);
+
+$spinner-md-crescent-color: color($colors, secondary, base);
 
 
 // App Windows Variables

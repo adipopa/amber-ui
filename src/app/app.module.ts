@@ -9,7 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Pro } from '@ionic/pro';
 
 import { AmberApp } from './app.component';
-import { IntroPage } from '../pages/intro/intro';
+import { StartPage } from '../pages/start/start';
 
 import { AuthModule } from '../pages/auth/auth.module';
 import { CoreModule } from '../pages/core/core.module';
@@ -42,7 +42,7 @@ export class AmberErrorHandler implements ErrorHandler {
 @NgModule({
   declarations: [
     AmberApp,
-    IntroPage
+    StartPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +53,7 @@ export class AmberErrorHandler implements ErrorHandler {
   bootstrap: [IonicApp],
   entryComponents: [
     AmberApp,
-    IntroPage
+    StartPage
   ],
   providers: [
     StatusBar,

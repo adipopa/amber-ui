@@ -31,3 +31,25 @@ ion-item.item-input {
 .toolbar-title {
   padding-left: 6px !important;
 }
+
+ion-navbar.solid {
+
+  .toolbar-background-md {
+    background-color: #fff !important;
+  }
+
+  .toolbar-title-md {
+    color: #000 !important;
+  }
+}
+
+ion-navbar.transparent {
+
+  .toolbar-background-md {
+    background-color: transparent !important;
+  }
+
+  .toolbar-title-md {
+    color: #fff !important;
+  }
+}
