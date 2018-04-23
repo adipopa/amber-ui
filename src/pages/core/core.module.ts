@@ -1,26 +1,33 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { AboutPage } from './about/about';
-import { TabsPage } from './tabs/tabs';
-import { ContactPage } from './contact/contact';
-import { HomePage } from './home/home';
+import { FeedPage } from './feed/feed';
+import { GoingPage } from './going/going';
+import { NotificationsPage } from './notifications/notifications';
+import { PeoplePage } from './people/people';
 
+import { ProfilePage } from './profile/profile';
+
+import { TabsPage } from './tabs/tabs';
 
 @NgModule({
   declarations: [
-    AboutPage,
-    ContactPage,
-    HomePage,
+    FeedPage,
+    GoingPage,
+    NotificationsPage,
+    PeoplePage,
+    ProfilePage,
     TabsPage
   ],
   imports: [
     IonicPageModule.forChild(TabsPage),
   ],
   entryComponents: [
-    AboutPage,
-    ContactPage,
-    HomePage,
+    FeedPage,
+    GoingPage,
+    NotificationsPage,
+    PeoplePage,
+    ProfilePage,
     TabsPage
   ]
 })

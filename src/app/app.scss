@@ -32,7 +32,7 @@ ion-item.item-input {
   padding-left: 6px !important;
 }
 
-ion-navbar.solid {
+ion-navbar.solid, ion-toolbar.solid {
 
   .toolbar-background-md {
     background-color: #fff !important;
@@ -43,13 +43,17 @@ ion-navbar.solid {
   }
 }
 
-ion-navbar.transparent {
+ion-navbar.transparent, ion-toolbar.transparent {
 
   .toolbar-background-md {
     background-color: transparent !important;
   }
 
   .toolbar-title-md {
+    color: #fff !important;
+  }
+
+  .bar-button-md {
     color: #fff !important;
   }
 }

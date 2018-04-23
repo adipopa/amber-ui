@@ -56,4 +56,8 @@ export class AuthService {
   //   // whether or not the token is expired
   //   return tokenNotExpired(null, token);
   // }
+
+  logout() {
+    localStorage.removeItem(AuthService.USER_TOKEN_KEY);
+  }
 }

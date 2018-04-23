@@ -1,19 +1,32 @@
 import { Component } from '@angular/core';
 
-import { HomePage } from '../home/home';
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
+import { FeedPage } from '../feed/feed';
+import { GoingPage } from '../going/going';
+import { NotificationsPage } from '../notifications/notifications';
+import { PeoplePage } from '../people/people';
+import { NavController, NavParams } from 'ionic-angular';
+import { ProfilePage } from '../profile/profile';
 
 @Component({
+  selector: 'page-tabs',
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+  tab1Root = FeedPage;
+  tab2Root = GoingPage;
+  tab3Root = NotificationsPage;
+  tab4Root = PeoplePage;
 
-  constructor() {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad TabsPage');
+  }
+
+  onProfile() {
+    this.navCtrl.push(ProfilePage);
+  }
+
 }

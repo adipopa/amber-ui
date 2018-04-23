@@ -26,21 +26,15 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private authService: AuthService) {
 
-    const username = this.navParams.get("username") || "";
-    const password = this.navParams.get("password") || "";
-
     this.loginForm = this.formBuilder.group({
-      username: [username, [Validators.required, Validators.email]],
-      password: [password, Validators.required],
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     });
-
-    if (username.length > 0) {
-      this.onLogin();
-    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+
     this.loginError = false;
   }
 

@@ -1,5 +1,12 @@
 page-register {
 
+  ion-header {
+
+    .toolbar-md {
+      min-height: 56px !important;
+    }
+  }
+
   ion-content {
     background-color: color($colors, primary, base) !important;
 
@@ -15,6 +22,10 @@ page-register {
             .button-md {
               width: 100%;
               margin-top: 32px !important;
+            }
+
+            .input-md {
+              color: #fff !important;
             }
 
             h4, p {

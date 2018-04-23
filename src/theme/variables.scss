@@ -66,6 +66,11 @@ $list-background-color: color($colors, primary, base);
 
 $spinner-md-crescent-color: color($colors, secondary, base);
 
+$toolbar-md-height: 42px;
+
+$tabs-md-background: color($colors, primary, base);
+$tabs-md-tab-icon-color: #fff;
+$tabs-md-tab-icon-color-active: color($colors, secondary, base);
 
 // App Windows Variables
 // --------------------------------------------------
