@@ -13,14 +13,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // These are all imports required for Pro Client with Monitoring & Deploy,
 // feel free to merge into existing imports above.
 import { Pro } from '@ionic/pro';
-import { PlaceProvider } from '../providers/place/PlaceProvider';
+import { PlaceProvider } from '../providers/place/place';
 import {Geolocation} from "@ionic-native/geolocation";
 import {HTTP} from "@ionic-native/http";
 
 import {SocketIoConfig, SocketIoModule} from "ng-socket-io";
 import { MessagingProvider } from '../providers/messaging/messaging';
 import { EventProvider } from '../providers/event/event';
-import {HTTP} from "@ionic-native/http";
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'

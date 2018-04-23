@@ -19,21 +19,21 @@ export class PlaceProvider {
   private IMAGE_MAX_HEIGHT = 400;
   private IMAGE_MAX_WIDTH = 400;
 
-  private currLocation: any;
+  private currLocation: {lat: number, lng: number};
 
 
   constructor(private httpRequest: HTTP, private geoLocation: Geolocation, public http: HttpClient) {
     console.log('Hello PlaceProvider Provider');
   }
 
-  private retrieveGeoLocation(): void {
+  private queryGeoLocation(): void {
     this.geoLocation.getCurrentPosition().then((resp) => {
-      this.currLocation = {latitude: resp.coords.latitude, longitude: resp.coords.longitude}
+      this.currLocation = {lat: resp.coords.latitude, lng: resp.coords.longitude}
     });
   }
 
   private geoLocationToString(): string {
-    return this.currLocation.latitude.toString()+','+this.currLocation.longitude.toString();
+    return this.currLocation.lat.toString()+','+this.currLocation.lng.toString();
   }
 
   private parseJsonToPlaceShortObjects(json: IPlaceShortArrayResponse): [PlaceShort] {
@@ -82,7 +82,7 @@ export class PlaceProvider {
   public queryPlacesShort(): [PlaceShort] {
     /** Returns a list of places for an event. */
     let result: [PlaceShort];
-    this.retrieveGeoLocation();
+    this.queryGeoLocation();
 
     this.httpRequest.get(this.PLACES_API_NEARBY_URL, {location: this.geoLocationToString(),
       key: this.PLACES_API_KEY, radius: "25000", type: "restaurant"}, {}).then(data => {
@@ -104,5 +104,10 @@ export class PlaceProvider {
     });
 
     return placeDetail;
+  }
+
+  public getUserLocation(): {lat: number, lng:number} {
+    this.queryGeoLocation();
+    return this.currLocation;
   }
 }
