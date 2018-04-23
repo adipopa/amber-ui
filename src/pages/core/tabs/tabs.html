@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-toolbar class="solid">
+    <ion-buttons left>
+      <button class="profile-button" (click)="onProfile()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>John Doe</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-tabs class="accent">
+    <ion-tab [root]="tab1Root" tabIcon="flame"></ion-tab>
+    <ion-tab [root]="tab2Root" tabIcon="paper-plane"></ion-tab>
+    <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>
+    <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>
+  </ion-tabs>
+</ion-content>
+
+<ion-footer>
+
+  <ion-toolbar class="solid">
+    <ion-buttons>
+      <button class="search-button">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>

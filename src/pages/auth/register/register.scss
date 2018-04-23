@@ -1,0 +1,51 @@
+page-register {
+
+  ion-header {
+
+    .toolbar-md {
+      min-height: 56px !important;
+    }
+  }
+
+  ion-content {
+    background-color: color($colors, primary, base) !important;
+
+    div {
+      width: 100%;
+
+      ion-grid {
+
+        ion-row {
+
+          form {
+
+            .button-md {
+              width: 100%;
+              margin-top: 32px !important;
+            }
+
+            .input-md {
+              color: #fff !important;
+            }
+
+            h4, p {
+              color: #fff;
+            }
+
+            h4 {
+              text-align: center;
+              margin: 15px 0 35px !important;
+            }
+
+            p {
+              font-size: 14px;
+              font-weight: 500;
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

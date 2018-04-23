@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { StartPage } from '../pages/start/start';
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
-  rootPage:any = TabsPage;
+export class AmberApp {
+
+  @ViewChild('appNav') nav: NavController;
+  public rootPage: any = StartPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -18,5 +20,11 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+  }
+
+  // Wait for the components in MyApp's template to be initialized
+  // In this case, we are waiting for the Nav with reference variable of "#myNav"
+  ngOnInit() {
+    // Let's navigate from TabsPage to Page1
   }
 }

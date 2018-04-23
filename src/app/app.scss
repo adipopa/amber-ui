@@ -14,3 +14,46 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.button-md {
+  margin: 0 !important;
+}
+
+ion-item.item-input {
+
+  padding-left: 0 !important;
+
+  .item-inner {
+    padding-right: 0 !important;
+  }
+}
+
+.toolbar-title {
+  padding-left: 6px !important;
+}
+
+ion-navbar.solid, ion-toolbar.solid {
+
+  .toolbar-background-md {
+    background-color: #fff !important;
+  }
+
+  .toolbar-title-md {
+    color: #000 !important;
+  }
+}
+
+ion-navbar.transparent, ion-toolbar.transparent {
+
+  .toolbar-background-md {
+    background-color: transparent !important;
+  }
+
+  .toolbar-title-md {
+    color: #fff !important;
+  }
+
+  .bar-button-md {
+    color: #fff !important;
+  }
+}
