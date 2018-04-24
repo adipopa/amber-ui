@@ -10,6 +10,8 @@ import { ProfilePage } from './profile/profile';
 
 import { TabsPage } from './tabs/tabs';
 
+import { UserService } from '@services/user.service';
+
 @NgModule({
   declarations: [
     FeedPage,
@@ -29,6 +31,9 @@ import { TabsPage } from './tabs/tabs';
     PeoplePage,
     ProfilePage,
     TabsPage
+  ],
+  providers: [
+    UserService
   ]
 })
 export class CoreModule {}

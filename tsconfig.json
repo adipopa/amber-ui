@@ -14,9 +14,14 @@
     "target": "es5",
     "baseUrl": "./src",
     "paths": {
-      "@app/environment": [
-        "environments/environment"
-      ]
+      "@app/*": [ "app/*" ],
+      "@assets/*": [ "assets/*" ],
+      "@environment": ["environments/environment"],
+      "@pages/*": ["pages/*"],
+      "@components/*": ["components/*"],
+      "@models/*": ["models/*"],
+      "@services/*": ["services/*"],
+      "@interceptors/*": ["interceptors/*"]
     }
   },
   "include": [

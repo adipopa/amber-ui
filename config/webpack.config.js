@@ -1,32 +1,35 @@
-var chalk = require("chalk");
-var fs = require('fs');
-var path = require('path');
-var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
+const chalk = require("chalk");
+const fs = require('fs');
+const path = require('path');
 
-var env = process.env.IONIC_ENV;
+const useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
-useDefaultConfig.prod.resolve.alias = {
-  "@app/environment": path.resolve(environmentPath('prod'))
+const env = process.env.IONIC_ENV;
+
+const appPaths = {
+  "@app": path.resolve('./src/app/'),
+  "@assets": path.resolve('./src/assets/'),
+  "@environment": path.resolve(environmentPath()),
+  "@pages": path.resolve('./src/pages/'),
+  "@components": path.resolve('./src/components/'),
+  "@models": path.resolve('./src/models/'),
+  "@services": path.resolve('./src/services/'),
+  "@interceptors": path.resolve('./src/interceptors/'),
 };
 
-useDefaultConfig.dev.resolve.alias = {
-  "@app/environment": path.resolve(environmentPath('dev'))
-};
-
-if (env !== 'prod' && env !== 'dev') {
+if (env === 'prod' || env === 'dev') {
+  useDefaultConfig[env].resolve.alias = appPaths;
+} else {
   // Default to dev config
   useDefaultConfig[env] = useDefaultConfig.dev;
-  useDefaultConfig[env].resolve.alias = {
-    "@app/environment": path.resolve(environmentPath(env))
-  };
+  useDefaultConfig[env].resolve.alias = appPaths;
 }
 
-function environmentPath(env) {
-  var filePath = './src/environments/environment' + (env === 'prod' ? '.' + env : '') + '.ts';
+function environmentPath() {
+  const filePath = './src/environments/environment' + (env === 'prod' ? '.' + env : '') + '.ts';
   if (!fs.existsSync(filePath)) {
     console.log(chalk.red('\n' + filePath + ' does not exist!'));
   } else {
-    console.log("Retrieving environment variables for env: " + env);
     return filePath;
   }
 }

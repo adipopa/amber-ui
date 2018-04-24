@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/map';
 
-import { environment } from '@app/environment'
+import { environment } from '@environment'
 
 /*
   Generated class for the AuthService provider.
@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   static handleLoginSuccess(data) {
-    AuthService.storeToken(data["access_token"]);
+    AuthService.storeToken(data['access_token']);
   }
 
   static storeToken(token: string): void {

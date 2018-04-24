@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams, Toast } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 
-import { AuthService } from '../auth.service';
 import { TabsPage } from '../../core/tabs/tabs';
+
+import { AuthService } from '@services/auth.service';
 
 /**
  * Generated class for the RegisterPage page.

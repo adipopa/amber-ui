@@ -9,10 +9,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Pro } from '@ionic/pro';
 
 import { AmberApp } from './app.component';
-import { StartPage } from '../pages/start/start';
 
-import { AuthModule } from '../pages/auth/auth.module';
-import { CoreModule } from '../pages/core/core.module';
+import { StartPage } from '@pages/start/start';
+
+import { AuthModule } from '@pages/auth/auth.module';
+import { CoreModule } from '@pages/core/core.module';
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'

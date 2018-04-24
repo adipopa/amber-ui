@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 
 import { FeedPage } from '../feed/feed';
 import { GoingPage } from '../going/going';
 import { NotificationsPage } from '../notifications/notifications';
 import { PeoplePage } from '../people/people';
-import { NavController, NavParams } from 'ionic-angular';
+
 import { ProfilePage } from '../profile/profile';
+
+import { UserService } from '@services/user.service';
 
 @Component({
   selector: 'page-tabs',
@@ -18,7 +21,10 @@ export class TabsPage {
   tab3Root = NotificationsPage;
   tab4Root = PeoplePage;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  firstLogin: boolean;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
+
   }
 
   ionViewDidLoad() {

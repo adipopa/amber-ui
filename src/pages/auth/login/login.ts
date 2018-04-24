@@ -4,7 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { TabsPage } from '../../core/tabs/tabs';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '@services/auth.service';
 
 /**
  * Generated class for the LoginPage page.
