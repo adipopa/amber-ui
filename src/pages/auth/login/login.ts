@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { TabsPage } from '../../core/tabs/tabs';
+import { InterestsPage } from '@pages/core/interests/interests';
+import { TabsPage } from '@pages/core/tabs/tabs';
 
 import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,8 +25,8 @@ export class LoginPage {
 
   private loginError: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
+              private authService: AuthService, private userService: UserService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]],
@@ -39,13 +41,13 @@ export class LoginPage {
   }
 
   onLogin() {
-    console.log(this.loginForm.value);
     this.authService.login(this.loginForm.value).subscribe(
       (data: any) => {
         console.log(data);
-        this.navCtrl.push(TabsPage);
+        this.resolveNextPage();
       },
       (error: any) => {
+        console.log(error);
         this.loginError = true;
       });
   }
@@ -54,4 +56,18 @@ export class LoginPage {
 
   }
 
+  resolveNextPage() {
+    this.userService.getUserDetails().subscribe(
+      (user) => {
+        if (user.firstLogin) {
+          this.navCtrl.setRoot(InterestsPage, null, {animate: true, direction: 'forward'});
+        } else {
+          this.navCtrl.setRoot(TabsPage, null, {animate: true, direction: 'forward'});
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

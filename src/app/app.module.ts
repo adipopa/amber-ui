@@ -1,6 +1,7 @@
 import { ErrorHandler, Injectable, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+
 import { Firebase } from '@ionic-native/firebase';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,6 +15,9 @@ import { StartPage } from '@pages/start/start';
 
 import { AuthModule } from '@pages/auth/auth.module';
 import { CoreModule } from '@pages/core/core.module';
+
+import { UserService } from '@services/user.service';
+import { InterestsService } from '@services/interests.service';
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'
@@ -61,7 +65,9 @@ export class AmberErrorHandler implements ErrorHandler {
     SplashScreen,
     IonicErrorHandler,
     {provide: ErrorHandler, useClass: AmberErrorHandler},
-    Firebase
+    Firebase,
+    UserService,
+    InterestsService
   ]
 })
 export class AppModule {

@@ -4,9 +4,11 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
 
-import { TabsPage } from '../../core/tabs/tabs';
+import { InterestsPage } from '@pages/core/interests/interests';
+import { TabsPage } from '@pages/core/tabs/tabs';
 
 import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -25,8 +27,8 @@ export class RegisterPage {
 
   private registerError: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private formBuilder: FormBuilder, private authService: AuthService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
+              private authService: AuthService, private userService: UserService) {
 
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.email]],
@@ -42,23 +44,41 @@ export class RegisterPage {
 
   onRegister() {
     const userDetails = this.registerForm.value;
-
     this.authService.register(userDetails).subscribe(
       (data: any) => {
-        this.authService.login(userDetails).subscribe(
-          (data: any) => {
-            console.log(data);
-            this.navCtrl.push(TabsPage);
-          },
-          (error: any) => {
-            this.navCtrl.push(LoginPage);
-          });
+        this.proceedToLogin(userDetails);
       },
       (error: any) => {
+        console.log(error);
         this.registerError = true;
       });
-
-    console.log(userDetails)
   }
 
+  proceedToLogin(userDetails) {
+    this.authService.login(userDetails).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.resolveNextPage();
+      },
+      (error: any) => {
+        console.log(error);
+        this.navCtrl.pop();
+        this.navCtrl.push(LoginPage);
+      });
+  }
+
+  resolveNextPage() {
+    this.userService.getUserDetails().subscribe(
+      (user) => {
+        if (user.firstLogin) {
+          this.navCtrl.setRoot(InterestsPage, null, {animate: true, direction: 'forward'});
+        } else {
+          this.navCtrl.setRoot(TabsPage, null, {animate: true, direction: 'forward'});
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

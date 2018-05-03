@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { User } from '@models/user.model';
+import 'rxjs/add/operator/map';
 
 import { environment } from '@environment';
 /*
@@ -11,17 +11,17 @@ import { environment } from '@environment';
   and Angular DI.
 */
 @Injectable()
-export class UserService {
+export class InterestsService {
 
-  static readonly USER_DETAILS_PATH = environment.baseURL + '/user';
+  static readonly GET_INTERESTS_PATH = environment.baseURL + '/interests';
 
   constructor(public http: HttpClient) {
-    console.log('Hello UserService Provider');
+    console.log('Hello InterestsService Provider');
   }
 
-  getUserDetails() {
-    console.log("Requested logged user details from server");
-    return this.http.get<User>(UserService.USER_DETAILS_PATH);
+  getAllInterests() {
+    console.log("Requested interests list from server");
+    return this.http.get(InterestsService.GET_INTERESTS_PATH);
   }
 
 }

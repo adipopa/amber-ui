@@ -1,0 +1,28 @@
+page-interests {
+
+  ion-content {
+
+    .scroll-content {
+      padding-bottom: 72px !important;
+    }
+
+    ion-slide {
+      padding: 42px 0;
+      align-items: flex-start !important;
+      overflow: auto !important;
+    }
+
+    ion-buttons {
+      position: absolute;
+      right: 16px;
+      bottom: 20px;
+
+      .button {
+        height: 32px;
+        margin: 0 2px !important;
+      }
+    }
+
+  }
+
+}

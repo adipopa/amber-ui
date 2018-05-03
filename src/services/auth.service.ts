@@ -18,6 +18,8 @@ export class AuthService {
   static readonly API_LOGIN_BASE_PATH = `${environment.baseURL}/auth`;
   static readonly API_REGISTER_BASE_PATH = `${environment.baseURL}/register`;
 
+  public isRefreshing = false;
+
   constructor(public http: HttpClient) {
     console.log('Hello AuthService Provider');
   }
@@ -46,7 +48,7 @@ export class AuthService {
   }
 
   static getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem(AuthService.USER_TOKEN_KEY);
   }
 
   // public isAuthenticated(): boolean {
@@ -57,7 +59,7 @@ export class AuthService {
   //   return tokenNotExpired(null, token);
   // }
 
-  logout() {
+  static logout() {
     localStorage.removeItem(AuthService.USER_TOKEN_KEY);
   }
 }
