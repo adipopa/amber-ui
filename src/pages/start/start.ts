@@ -2,9 +2,12 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { IntroPage } from '../auth/intro/intro';
-import { TabsPage } from '../core/tabs/tabs';
 
-import { AuthService } from '../auth/auth.service';
+import { InterestsPage } from '@pages/core/interests/interests';
+import { TabsPage } from '@pages/core/tabs/tabs';
+
+import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
 
 /**
  * Generated class for the StartPage page.
@@ -19,22 +22,34 @@ import { AuthService } from '../auth/auth.service';
 })
 export class StartPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad StartPage');
 
-    // Keeping the loading page up for 3 seconds, then proceed to the specific page based on the login status
+    // Keeping the loading page up for 1 second, then proceed to the specific page based on the login status
     setTimeout(() => {
       if (localStorage.getItem(AuthService.USER_TOKEN_KEY)) {
-        console.log('found token');
-        this.navCtrl.push(TabsPage);
+        this.resolveNextPage();
       } else {
-        console.log("user not logged in");
         this.navCtrl.push(IntroPage);
       }
-    }, 3000);
+    }, 1000);
   }
 
+  resolveNextPage() {
+    this.userService.getUserDetails().subscribe(
+      (user) => {
+        if (user.firstLogin) {
+          this.navCtrl.setRoot(InterestsPage, null, {animate: true, direction: 'forward'});
+        } else {
+          this.navCtrl.setRoot(TabsPage, null, {animate: true, direction: 'forward'});
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 }

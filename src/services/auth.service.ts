@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/map';
 
-import { environment } from '@app/environment'
+import { environment } from '@environment'
 
 /*
   Generated class for the AuthService provider.
@@ -17,6 +17,8 @@ export class AuthService {
   static readonly USER_TOKEN_KEY = 'user_token';
   static readonly API_LOGIN_BASE_PATH = `${environment.baseURL}/auth`;
   static readonly API_REGISTER_BASE_PATH = `${environment.baseURL}/register`;
+
+  public isRefreshing = false;
 
   constructor(public http: HttpClient) {
     console.log('Hello AuthService Provider');
@@ -38,7 +40,7 @@ export class AuthService {
   }
 
   static handleLoginSuccess(data) {
-    AuthService.storeToken(data["access_token"]);
+    AuthService.storeToken(data['access_token']);
   }
 
   static storeToken(token: string): void {
@@ -46,7 +48,7 @@ export class AuthService {
   }
 
   static getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem(AuthService.USER_TOKEN_KEY);
   }
 
   // public isAuthenticated(): boolean {
@@ -57,7 +59,7 @@ export class AuthService {
   //   return tokenNotExpired(null, token);
   // }
 
-  logout() {
+  static logout() {
     localStorage.removeItem(AuthService.USER_TOKEN_KEY);
   }
 }

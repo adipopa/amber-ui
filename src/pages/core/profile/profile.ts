@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { AuthService } from '../../auth/auth.service';
-import { StartPage } from '../../start/start';
 import { IntroPage } from '../../auth/intro/intro';
+
+import { AuthService } from '@services/auth.service';
 
 /**
  * Generated class for the ProfilePage page.
@@ -18,8 +18,7 @@ import { IntroPage } from '../../auth/intro/intro';
 })
 export class ProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private authService: AuthService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -27,7 +26,7 @@ export class ProfilePage {
   }
 
   onLogout() {
-    this.authService.logout();
+    AuthService.logout();
     this.navCtrl.setRoot(IntroPage, null, {animate: true, direction: 'forward'});
   }
 

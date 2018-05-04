@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header no-border class="profile-header">
 
   <ion-toolbar class="solid">
     <ion-buttons left>
@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-tabs class="accent">
+  <ion-tabs>
     <ion-tab [root]="tab1Root" tabIcon="flame"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="paper-plane"></ion-tab>
     <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>
@@ -20,7 +20,7 @@
   </ion-tabs>
 </ion-content>
 
-<ion-footer>
+<ion-footer no-border class="search-footer">
 
   <ion-toolbar class="solid">
     <ion-buttons>

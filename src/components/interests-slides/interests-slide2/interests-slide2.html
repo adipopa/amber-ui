@@ -1,0 +1,13 @@
+<h5>We want to know your preferences on these topics, give us a hint.</h5>
+<ion-grid>
+  <ion-row *ngFor="let interest of interests">
+    <ion-col col-12>
+      <ion-label>{{ interest.category }}</ion-label>
+      <ion-list>
+        <chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="true"
+              (onSelect)="onSelectOption(interest, option)" (onRemove)="onRemoveOption(interest, option)"></chip>
+      </ion-list>
+      <hr>
+    </ion-col>
+  </ion-row>
+</ion-grid>

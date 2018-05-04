@@ -1,21 +1,32 @@
 page-tabs {
 
+  ion-header.profile-header {
+    top: 4px;
+
+    .toolbar-md {
+      min-height: 38px;
+    }
+  }
+
   ion-toolbar {
 
     ion-icon {
-      font-size: 1.6em;
+      font-size: 1.8em;
     }
 
   }
 
-  .profile-button {
-    background-color: transparent;
-    margin: 0 8px 0 12px;
+  ion-footer.search-footer {
+    bottom: 4px;
+
+    .toolbar-md {
+      min-height: 38px;
+    }
   }
 
-  .search-button {
+  .profile-button, .search-button {
     background-color: transparent;
-    margin-left: 16px;
+    margin-left: 8px;
   }
 
 }
