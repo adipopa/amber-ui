@@ -1,3 +1,5 @@
+import { Interest } from '@models/interest.model';
+
 export class User {
 
   public id: number;
@@ -7,7 +9,7 @@ export class User {
   public age: string;
   public bio: string;
   public profileImg: string;
-  public interests: string[];
+  public interests: Interest[];
   public firstLogin: boolean;
 
   constructor(user: any = {}) {
@@ -23,7 +25,7 @@ export class User {
   }
 
   mapInterests(interests = []) {
-    this.interests = interests.map(interest => String(interest));
+    this.interests = interests.map(interest => new Interest(interest));
   }
 
 }

@@ -3,6 +3,7 @@ import { NavController, NavParams, Slides } from 'ionic-angular';
 
 import { User } from '@models/user.model';
 import { Interest } from '@models/interest.model';
+import { UserService } from '@services/user.service';
 
 /**
  * Generated class for the InterestsPage page.
@@ -24,7 +25,7 @@ export class InterestsPage {
 
   public slideIndex = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
   }
 
   ionViewDidLoad() {
@@ -48,7 +49,15 @@ export class InterestsPage {
   }
 
   submitInterests() {
-
+    this.userDetails.interests = this.selectedInterests;
+    this.userService.updateUserDetails(this.userDetails).subscribe(
+      () => {
+        console.log("User details updated successfully");
+      },
+      () => {
+        console.log("User details couldn't be updated");
+      }
+    );
   }
 
 }

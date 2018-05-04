@@ -24,4 +24,10 @@ export class UserService {
     return this.http.get<User>(UserService.USER_DETAILS_PATH);
   }
 
+  updateUserDetails(user: User) {
+    console.log("Updating user details on server");
+    return this.http.put<User>(UserService.USER_DETAILS_PATH, user);
+    // return this.http.put<User>(`${UserService.USER_DETAILS_PATH}/${user.id}`, user);
+  }
+
 }
