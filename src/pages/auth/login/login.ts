@@ -29,7 +29,7 @@ export class LoginPage {
               private authService: AuthService, private userService: UserService) {
 
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }

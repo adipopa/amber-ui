@@ -64,6 +64,8 @@ $toolbar-md-height: 42px;
 $text-input-md-show-valid-highlight: false;
 $text-input-md-show-invalid-highlight: false;
 
+$text-input-md-input-clear-icon-color: color($colors, secondary, base);
+
 $tabs-md-background: color($colors, primary, base);
 $tabs-md-tab-icon-color: #fff;
 $tabs-md-tab-icon-color-active: color($colors, secondary, base);

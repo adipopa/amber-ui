@@ -9,6 +9,7 @@ export class Event {
   public busyTime: BusyTime;
   public lat: number;
   public lng: number;
+  public thumbnailPath: string;
   public users: User[];
 
   constructor(event: any = {}) {
@@ -18,6 +19,7 @@ export class Event {
     this.busyTime = Event.mapBusyTime(event.busyTime);
     this.lat = event.lat || 0;
     this.lng = event.lng || 0;
+    this.thumbnailPath = event.thumbnailPath || '';
     this.mapUsers(event.users);
   }
 

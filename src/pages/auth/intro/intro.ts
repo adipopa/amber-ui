@@ -24,7 +24,7 @@ export class IntroPage {
     console.log('ionViewDidLoad IntroPage');
   }
 
-  onLoginByEmail() {
+  onLoginByUsername() {
     this.navCtrl.push(LoginPage);
   }
 

@@ -3,7 +3,7 @@ import { Interest } from '@models/interest.model';
 export class User {
 
   public id: number;
-  public email: string;
+  public username: string;
   public firstName: string;
   public lastName: string;
   public age: string;
@@ -14,7 +14,7 @@ export class User {
 
   constructor(user: any = {}) {
     this.id = user.id || 0;
-    this.email = user.email || '';
+    this.username = user.username || '';
     this.firstName = user.firstName || '';
     this.lastName = user.lastName || '';
     this.age = user.age || '';
