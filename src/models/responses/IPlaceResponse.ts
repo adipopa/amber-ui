@@ -11,7 +11,7 @@ interface IPlaceResponse {
   opening_hours: {
     open_now: boolean
   }
-  photos: IPhotoResponse
+  photos: IPhotoResponse[]
   place_id: string
   scope: string
   alt_ids: {place_id: string, scope: string}[]

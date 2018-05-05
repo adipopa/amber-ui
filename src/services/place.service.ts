@@ -3,8 +3,11 @@ import { Injectable } from '@angular/core';
 
 import { Geolocation } from "@ionic-native/geolocation";
 
-import { environment } from '@environment';
 import { Place } from '@models/place.model';
+
+import { Subject } from 'rxjs/Subject';
+
+import { environment } from '@environment';
 
 /*
   Generated class for the PlaceService provider.
@@ -21,24 +24,14 @@ export class PlaceService {
   static readonly IMAGE_MAX_HEIGHT = '400';
   static readonly IMAGE_MAX_WIDTH = '400';
 
-  private currLocation: {lat: any, lng: any};
-
+  public nearbyPlacesSubject: Subject<Place[]> = new Subject<Place[]>();
 
   constructor(private http: HttpClient, private geoLocation: Geolocation) {
     console.log('Hello PlaceService Provider');
   }
 
-  private queryGeoLocation(): void {
-    this.geoLocation.getCurrentPosition().then((resp) => {
-      this.currLocation = {
-        lat: resp.coords.latitude,
-        lng: resp.coords.longitude
-      }
-    });
-  }
-
-  private geoLocationToString(): string {
-    return this.currLocation.lat.toString() + ',' + this.currLocation.lng.toString();
+  private static geoLocationToString(currLocation): string {
+    return currLocation.lat.toString() + ',' + currLocation.lng.toString();
   }
 
   private parseJsonToPlaceObjects(json: IPlaceArrayResponse): Place[] {
@@ -48,16 +41,21 @@ export class PlaceService {
       place.lng = x.geometry.location.lng;
       place.lat = x.geometry.location.lat;
       place.name = x.name;
+      place.id = x.place_id;
       place.address = x.vicinity;
-      this.queryImageReference(x.photos.photo_reference).subscribe(
-        (image) => {
-          place.thumbnail = image;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      parsedResult.concat(place)
+      if (x.photos[0] != null) {
+        console.log(x.photos[0].photo_reference);
+        // this.queryImageReference(x.photos[0].photo_reference).subscribe(
+        //   (image) => {
+        //     console.log(image);
+        //     // place.thumbnail = image;
+        //   },
+        //   (error) => {
+        //     console.log(error);
+        //   }
+        // );
+      }
+      // parsedResult.concat(place)
     }
 
     return parsedResult;
@@ -75,21 +73,32 @@ export class PlaceService {
 
   public queryPlaces() {
     /** Returns a list of places for an event. */
-    this.queryGeoLocation();
 
-    let params = new HttpParams();
-    params = params.set('location', this.geoLocationToString());
-    params = params.set('key', environment.placesApiKey);
-    params = params.set('radius', '25000');
-    params = params.set('type', 'restaurant');
+    this.geoLocation.getCurrentPosition().then((resp) => {
 
-    return this.http.get<Place[]>(PlaceService.PLACES_API_NEARBY_PATH, {params: params});
+      let currLocation = {
+        lat: resp.coords.latitude,
+        lng: resp.coords.longitude
+      };
 
-    // result = this.parseJsonToPlaceObjects(data.data.result);
+      let params = new HttpParams();
+      params = params.set('location', PlaceService.geoLocationToString(currLocation));
+      params = params.set('key', environment.placesApiKey);
+      params = params.set('radius', '25000');
+      params = params.set('type', 'restaurant');
+
+      this.http.get<IPlaceArrayResponse>(PlaceService.PLACES_API_NEARBY_PATH, {params: params}).subscribe(
+        (response) => {
+          let places = this.parseJsonToPlaceObjects(response);
+          this.nearbyPlacesSubject.next(places);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }).catch(error => {
+      console.log(error)
+    });
   }
 
-  public getUserLocation(): {lat: any, lng: any} {
-    this.queryGeoLocation();
-    return this.currLocation;
-  }
 }

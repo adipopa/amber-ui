@@ -7,12 +7,47 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>create-event</ion-title>
+    <ion-title>Create an event</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <h3>You're about to create a public event.</h3>
+  <h5>Complete the details as you see fit and publish it when you're ready.</h5>
+  <form [formGroup]="eventForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>Title</ion-label>
+            <ion-input type="text" [formControl]="eventForm.controls['title']"
+                       [(ngModel)]="event.title"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>Description</ion-label>
+            <ion-textarea type="text" [formControl]="eventForm.controls['description']"
+                       [(ngModel)]="event.description"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>Location</ion-label>
+            <ion-input type="text" [formControl]="eventForm.controls['place']"
+                          [(ngModel)]="event.place.id"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
 
 </ion-content>

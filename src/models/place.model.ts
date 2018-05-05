@@ -1,5 +1,6 @@
 export class Place {
 
+  public id: string;
   public name: string; // Eis Caffe <-
   public address: string; // Lotus 19, Turda, Cluj
   public lat: number; // 352352
@@ -7,6 +8,7 @@ export class Place {
   public thumbnail: File;
 
   constructor(place: any = {}) {
+    this.id = place.id || '';
     this.name = place.name || '';
     this.address = place.address || '';
     this.lat = place.lat || 0;

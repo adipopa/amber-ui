@@ -23,6 +23,7 @@ import { UserService } from '@services/user.service';
 import { InterestsService } from '@services/interests.service';
 import { PlaceService } from '@services/place.service';
 import { EventService } from '@services/event.service';
+import { HTTP } from '@ionic-native/http';
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'
@@ -75,6 +76,7 @@ const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options
     {provide: ErrorHandler, useClass: AmberErrorHandler},
     Firebase,
     Geolocation,
+    HTTP,
     UserService,
     InterestsService,
     PlaceService,
