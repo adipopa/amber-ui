@@ -7,7 +7,7 @@ import { environment } from '@environment';
 import { Place } from '@models/place.model';
 
 /*
-  Generated class for the PlaceProvider provider.
+  Generated class for the PlaceService provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
@@ -25,7 +25,7 @@ export class PlaceService {
 
 
   constructor(private http: HttpClient, private geoLocation: Geolocation) {
-    console.log('Hello PlaceProvider Provider');
+    console.log('Hello PlaceService Provider');
   }
 
   private queryGeoLocation(): void {

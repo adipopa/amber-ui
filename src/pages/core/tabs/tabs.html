@@ -13,7 +13,7 @@
 
 <ion-content>
   <ion-tabs>
-    <ion-tab [root]="tab1Root" tabIcon="flame"></ion-tab>
+    <ion-tab [root]="tab1Root" [rootParams]="{parentCtrl: this.navCtrl}" tabIcon="flame"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="paper-plane"></ion-tab>
     <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>
     <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>

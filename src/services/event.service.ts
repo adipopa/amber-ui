@@ -6,7 +6,7 @@ import { PlaceService } from "./place.service";
 import { environment } from '@environment';
 
 /*
-  Generated class for the EventProvider provider.
+  Generated class for the EventService provider.
 
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
@@ -19,7 +19,18 @@ export class EventService {
 
 
   constructor(private http: HttpClient, private placeService: PlaceService) {
-    console.log('Hello EventProvider Provider');
+    console.log('Hello EventService Provider');
+  }
+
+  getEventsAvailableToUser(userId: any) {
+    let location = this.placeService.getUserLocation();
+
+    let params = new HttpParams();
+    params = params.set('userId', userId);
+    params = params.set('lat', location.lat);
+    params = params.set('lng', location.lng);
+
+    return this.http.get<Event[]>(EventService.AVAILABLE_EVENTS_PATH, {params: params});
   }
 
   createEvent(event: Event) {
@@ -43,17 +54,6 @@ export class EventService {
     params = params.set('eventId', eventId);
 
     return this.http.delete(EventService.EVENT_PATH, {params: params});
-  }
-
-  getEventsAvailableToUser(userId: any) {
-    let location = this.placeService.getUserLocation();
-
-    let params = new HttpParams();
-    params = params.set('userId', userId);
-    params = params.set('lat', location.lat);
-    params = params.set('lng', location.lng);
-
-    return this.http.get<Event[]>(EventService.AVAILABLE_EVENTS_PATH, {params: params});
   }
 
 }

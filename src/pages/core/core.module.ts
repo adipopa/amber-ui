@@ -10,6 +10,7 @@ import { PeoplePage } from './people/people';
 
 import { InterestsPage } from './interests/interests';
 import { ProfilePage } from './profile/profile';
+import { CreateEventPage } from './create-event/create-event';
 
 import { TabsPage } from './tabs/tabs';
 
@@ -25,6 +26,7 @@ import { AuthHeaderInterceptor } from '@interceptors/auth.interceptor';
     PeoplePage,
     InterestsPage,
     ProfilePage,
+    CreateEventPage,
     TabsPage
   ],
   imports: [
@@ -38,6 +40,7 @@ import { AuthHeaderInterceptor } from '@interceptors/auth.interceptor';
     PeoplePage,
     InterestsPage,
     ProfilePage,
+    CreateEventPage,
     TabsPage
   ],
   providers: [

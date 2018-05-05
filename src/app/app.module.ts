@@ -58,7 +58,7 @@ const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AmberApp),
+    IonicModule.forRoot(AmberApp, {tabsHideOnSubPages: true}),
     SocketIoModule.forRoot(config),
     AuthModule,
     CoreModule

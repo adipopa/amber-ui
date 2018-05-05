@@ -30,4 +30,8 @@ export class UserService {
     // return this.http.put<User>(`${UserService.USER_DETAILS_PATH}/${user.id}`, user);
   }
 
+  getLocation() {
+
+  }
+
 }
