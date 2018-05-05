@@ -3,11 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { Firebase } from '@ionic-native/firebase';
+import { Geolocation } from "@ionic-native/geolocation";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Pro } from '@ionic/pro';
+
+import {SocketIoConfig, SocketIoModule} from "ng-socket-io";
 
 import { AmberApp } from './app.component';
 
@@ -18,6 +21,8 @@ import { CoreModule } from '@pages/core/core.module';
 
 import { UserService } from '@services/user.service';
 import { InterestsService } from '@services/interests.service';
+import { PlaceService } from '@services/place.service';
+import { EventService } from '@services/event.service';
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'
@@ -44,6 +49,8 @@ export class AmberErrorHandler implements ErrorHandler {
   }
 }
 
+const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options: {}};
+
 @NgModule({
   declarations: [
     AmberApp,
@@ -52,13 +59,14 @@ export class AmberErrorHandler implements ErrorHandler {
   imports: [
     BrowserModule,
     IonicModule.forRoot(AmberApp),
+    SocketIoModule.forRoot(config),
     AuthModule,
     CoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     AmberApp,
-    StartPage
+    StartPage,
   ],
   providers: [
     StatusBar,
@@ -66,8 +74,11 @@ export class AmberErrorHandler implements ErrorHandler {
     IonicErrorHandler,
     {provide: ErrorHandler, useClass: AmberErrorHandler},
     Firebase,
+    Geolocation,
     UserService,
-    InterestsService
+    InterestsService,
+    PlaceService,
+    EventService
   ]
 })
 export class AppModule {
