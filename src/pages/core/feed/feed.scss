@@ -1,7 +1,13 @@
 page-feed {
 
   ion-fab[bottom] {
-    bottom: 20px !important;
+    right: 16px !important;
+    bottom: 32px !important;
+
+    button {
+      width: 52px;
+      height: 52px;
+    }
   }
 
 }

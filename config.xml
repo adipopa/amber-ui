@@ -87,6 +87,6 @@
     </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
     <allow-navigation href="http://192.168.0.80:8100" />
-    <engine name="android" spec="7.0.0" />
     <engine name="browser" spec="5.0.3" />
+    <engine name="android" spec="^7.1.0" />
 </widget>

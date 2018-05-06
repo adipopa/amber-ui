@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { HTTP } from '@ionic-native/http';
 import { Geolocation } from "@ionic-native/geolocation";
 
 import { Place } from '@models/place.model';
@@ -26,15 +26,15 @@ export class PlaceService {
 
   public nearbyPlacesSubject: Subject<Place[]> = new Subject<Place[]>();
 
-  constructor(private http: HttpClient, private geoLocation: Geolocation) {
+  constructor(private http: HTTP, private geolocation: Geolocation) {
     console.log('Hello PlaceService Provider');
   }
 
-  private static geoLocationToString(currLocation): string {
+  private static geolocationToString(currLocation): string {
     return currLocation.lat.toString() + ',' + currLocation.lng.toString();
   }
 
-  private parseJsonToPlaceObjects(json: IPlaceArrayResponse): Place[] {
+  private parseJsonToPlaceObjects(json: IPlaceArrayResponse) {
     let parsedResult: Place[] = [];
     for (let x of json.results) {
       let place = new Place();
@@ -43,59 +43,64 @@ export class PlaceService {
       place.name = x.name;
       place.id = x.place_id;
       place.address = x.vicinity;
-      if (x.photos[0] != null) {
-        console.log(x.photos[0].photo_reference);
-        // this.queryImageReference(x.photos[0].photo_reference).subscribe(
-        //   (image) => {
-        //     console.log(image);
-        //     // place.thumbnail = image;
-        //   },
-        //   (error) => {
-        //     console.log(error);
-        //   }
-        // );
+      if (x.photos != null) {
+        this.queryImageReference(x.photos[0].photo_reference).then(
+          (response) => {
+            place.thumbnail = response.url;
+            parsedResult.push(place);
+            if (parsedResult.length == json.results.length) {
+              this.nearbyPlacesSubject.next(parsedResult);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        parsedResult.push(place);
+        if (parsedResult.length == json.results.length) {
+          this.nearbyPlacesSubject.next(parsedResult);
+        }
       }
-      // parsedResult.concat(place)
     }
 
-    return parsedResult;
   }
 
   private queryImageReference(photoReference: string) {
-    let params = new HttpParams();
-    params = params.set('key', environment.placesApiKey);
-    params = params.set('photoReference', photoReference);
-    params = params.set('maxHeight', PlaceService.IMAGE_MAX_HEIGHT);
-    params = params.set('maxWidth', PlaceService.IMAGE_MAX_WIDTH);
+    let params = {
+      key: environment.placesApiKey,
+      photoreference: photoReference,
+      maxheight: PlaceService.IMAGE_MAX_HEIGHT,
+      maxwidth: PlaceService.IMAGE_MAX_WIDTH
+    };
 
-    return this.http.get<File>(PlaceService.PLACES_API_IMAGE_PATH, {params: params});
+    return this.http.get(PlaceService.PLACES_API_IMAGE_PATH, params, {});
   }
 
   public queryPlaces() {
     /** Returns a list of places for an event. */
 
-    this.geoLocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition().then((resp) => {
 
       let currLocation = {
         lat: resp.coords.latitude,
         lng: resp.coords.longitude
       };
 
-      let params = new HttpParams();
-      params = params.set('location', PlaceService.geoLocationToString(currLocation));
-      params = params.set('key', environment.placesApiKey);
-      params = params.set('radius', '25000');
-      params = params.set('type', 'restaurant');
+      let params = {
+        location: PlaceService.geolocationToString(currLocation),
+        key: environment.placesApiKey,
+        radius: '25000',
+        type: 'restaurant'
+      };
 
-      this.http.get<IPlaceArrayResponse>(PlaceService.PLACES_API_NEARBY_PATH, {params: params}).subscribe(
+      this.http.get(PlaceService.PLACES_API_NEARBY_PATH, params, {}).then(
         (response) => {
-          let places = this.parseJsonToPlaceObjects(response);
-          this.nearbyPlacesSubject.next(places);
-        },
-        (error) => {
+          this.parseJsonToPlaceObjects(JSON.parse(response.data));
+        })
+        .catch((error) => {
           console.log(error);
-        }
-      );
+        });
+
     }).catch(error => {
       console.log(error)
     });

@@ -15,14 +15,14 @@
 
 <ion-content padding>
 
-  <h3>You're about to create a public event.</h3>
-  <h5>Complete the details as you see fit and publish it when you're ready.</h5>
+  <h4>Complete the event details.</h4>
+  <p>Hit the publish button when everything's ready.</p>
   <form [formGroup]="eventForm">
     <ion-grid>
       <ion-row>
-        <ion-col col-12>
+        <ion-col col-12 no-padding>
           <ion-item>
-            <ion-label floating>Title</ion-label>
+            <ion-label floating>Event name</ion-label>
             <ion-input type="text" [formControl]="eventForm.controls['title']"
                        [(ngModel)]="event.title"></ion-input>
           </ion-item>
@@ -30,20 +30,14 @@
       </ion-row>
       <ion-row>
         <ion-col col-12>
-          <ion-item>
-            <ion-label floating>Description</ion-label>
-            <ion-textarea type="text" [formControl]="eventForm.controls['description']"
-                       [(ngModel)]="event.description"></ion-textarea>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col col-12>
-          <ion-item>
-            <ion-label floating>Location</ion-label>
-            <ion-input type="text" [formControl]="eventForm.controls['place']"
-                          [(ngModel)]="event.place.id"></ion-input>
-          </ion-item>
+          <ion-list class="details-list">
+            <ion-item>
+              <ion-icon name="create" item-left></ion-icon>
+              <ion-textarea type="text" rows="1" placeholder="Description"
+                            [formControl]="eventForm.controls['description']" [(ngModel)]="event.description">
+              </ion-textarea>
+            </ion-item>
+          </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>

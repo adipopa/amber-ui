@@ -21,14 +21,14 @@ export class EventService {
 
   public availableEventsSubject: Subject<Event[]> = new Subject<Event[]>();
 
-  constructor(private http: HttpClient, private geoLocation: Geolocation) {
+  constructor(private http: HttpClient, private geolocation: Geolocation) {
     console.log('Hello EventService Provider');
   }
 
   getEventsAvailableToUser(userId: any) {
     /** Returns a list of places for an event. */
 
-    this.geoLocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition().then((resp) => {
       let currLocation = {
         lat: resp.coords.latitude.toString(),
         lng: resp.coords.longitude.toString()

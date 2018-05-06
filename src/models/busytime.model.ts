@@ -1,10 +1,10 @@
 export class BusyTime {
 
-  public startDate: string;
-  public endDate: string;
+  public startDate: number;
+  public endDate: number;
 
   constructor(busyTime: any = {}) {
-    this.startDate = busyTime.startDate;
-    this.endDate = busyTime.endDate;
+    this.startDate = busyTime.startDate || 0;
+    this.endDate = busyTime.endDate || 0;
   }
 }

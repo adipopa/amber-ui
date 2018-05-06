@@ -23,7 +23,7 @@ export class TabsPage {
   tab3Root = NotificationsPage;
   tab4Root = PeoplePage;
 
-  public currentUser: User;
+  public currentUser: User = new User();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserService) {
   }
@@ -40,7 +40,6 @@ export class TabsPage {
   getCurrentUser() {
     this.userService.getUserDetails().subscribe(
       (user) => {
-        console.log(user);
         this.currentUser = user;
       },
       (error) => {

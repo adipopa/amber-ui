@@ -3,8 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Event } from '@models/event.model';
-import { Place } from '@models/place.model';
-import { PlaceService } from '@services/place.service';
 
 /**
  * Generated class for the CreateEventPage page.
@@ -23,30 +21,16 @@ export class CreateEventPage {
 
   public eventForm: FormGroup;
 
-  public nearbyPlaces: Place[] = [];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private placeService: PlaceService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.eventForm = new FormGroup({
       title: new FormControl(this.event.title, [Validators.required]),
       description: new FormControl(this.event.description, []),
       place: new FormControl(this.event.place.id, [Validators.required])
     });
-
-    this.placeService.nearbyPlacesSubject.subscribe(
-      (places) => {
-        this.nearbyPlaces = places;
-        console.log(this.nearbyPlaces);
-      }
-    );
-    this.placeService.queryPlaces();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateEventPage');
-  }
-
-  ionViewDidUnload() {
-    this.placeService.nearbyPlacesSubject.unsubscribe();
   }
 
 }
