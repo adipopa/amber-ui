@@ -8,7 +8,8 @@ page-register {
   }
 
   ion-content {
-    background-color: color($colors, primary, base) !important;
+    background: url("/assets/imgs/background.jpg") no-repeat center center;
+    background-size: cover;
 
     div {
       width: 100%;

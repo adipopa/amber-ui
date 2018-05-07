@@ -13,21 +13,30 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <ion-grid>
+  <ion-grid no-padding>
     <ion-row>
       <ion-col col-12>
-        <ion-list>
-          <ion-item *ngFor="let place of nearbyPlaces" (click)="onSelectPlace(place)">
-            <ion-icon name="location"></ion-icon>{{ place.name }}
+        <h5>Select a place: </h5>
+        <ion-list radio-group [(ngModel)]="selectedPlace">
+          <ion-item *ngFor="let place of nearbyPlaces">
+            <ion-label>{{ place.name }}</ion-label>
+            <ion-radio [value]="place"
+                       (ionSelect)="onSelectPlace(place)">
+            </ion-radio>
           </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col col-12>
+      <ion-col col-12 style="padding: 0 20px">
         <div #map id="map"></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-12 style="padding: 0 20px">
+        <button ion-button (click)="submitChoice()">Done</button>
       </ion-col>
     </ion-row>
   </ion-grid>

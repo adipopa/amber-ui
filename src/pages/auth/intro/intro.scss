@@ -1,7 +1,8 @@
 page-intro {
 
   ion-content {
-    background-color: color($colors, primary, base) !important;
+    background: url("/assets/imgs/background.jpg") no-repeat center center;
+    background-size: cover;
 
     div [ion-fixed] {
       width: 100%;
@@ -37,6 +38,7 @@ page-intro {
         }
 
         p {
+          font-weight: bold;
           font-size: 14px;
         }
 

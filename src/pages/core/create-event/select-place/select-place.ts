@@ -32,7 +32,11 @@ export class SelectPlacePage {
 
   private nearbyPlacesSubscription: Subscription;
 
-  public locationSubject: Subject<Place> = new Subject<Place>();
+  private selectedPlace: Place = new Place();
+
+  public locationSubject: Subject<Place>;
+
+  private lastInfoWindow = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private placeService: PlaceService, private geolocation: Geolocation) {
@@ -48,10 +52,11 @@ export class SelectPlacePage {
       }
     );
     this.placeService.queryPlaces();
+    this.locationSubject = this.navParams.get('locationSubject');
   }
 
   onSelectPlace(place: Place) {
-    this.locationSubject.next(place);
+    this.selectMarker(place);
   }
 
   loadMap() {
@@ -86,27 +91,58 @@ export class SelectPlacePage {
       position: latLng,
     });
 
-    let content = `
-      <h4>${place.name}</h4>
-      <p>${place.address}</p><br>
-      <img src="${place.thumbnail}" style="width: 200px; height: 100px; object-fit: cover">
-    `;
+    place.marker = marker;
 
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
+    let infoWindow = SelectPlacePage.getInfoWindow(place);
 
     this.addClickListener(place, marker, infoWindow);
   }
 
+  selectMarker(place: Place) {
+    if (place.marker != null) {
+      let infoWindow = SelectPlacePage.getInfoWindow(place);
+
+      this.showMarkerDetails(place.marker, infoWindow);
+    }
+  }
+
   addClickListener(place, marker, infoWindow){
     google.maps.event.addListener(marker, 'click', () => {
-      if (marker.getAnimation() !== null) {
-        marker.setAnimation(null);
-      } else {
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-      }
-      infoWindow.open(this.map, marker);
+      this.selectedPlace = place;
+      this.showMarkerDetails(marker, infoWindow);
     });
+  }
+
+  submitChoice() {
+    this.locationSubject.next(this.selectedPlace);
+    this.navCtrl.pop();
+  }
+
+  static getInfoWindow(place) {
+    let content = `
+      <div style="width: 210px; text-align: center">
+        <h4>${place.name}</h4>
+        <p>${place.address}</p><br>
+        <img src="${place.thumbnail}" style="width: 200px; height: 100px; object-fit: cover">
+      </div>
+    `;
+
+    return new google.maps.InfoWindow({
+      content: content
+    });
+  }
+
+  showMarkerDetails(marker, infoWindow) {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(() => {
+      marker.setAnimation(null);
+    }, 1000);
+
+    if (this.lastInfoWindow != null) {
+      this.lastInfoWindow.close();
+    }
+
+    infoWindow.open(this.map, marker);
+    this.lastInfoWindow = infoWindow;
   }
 }

@@ -6,6 +6,7 @@ export class Place {
   public lat: number; // 352352
   public lng: number; // 421321
   public thumbnail: string;
+  public marker: any;
 
   constructor(place: any = {}) {
     this.id = place.id || '';
@@ -14,5 +15,6 @@ export class Place {
     this.lat = place.lat || 0;
     this.lng = place.lng || 0;
     this.thumbnail = place.thumbnail || '';
+    this.marker = place.marker || null;
   }
 }

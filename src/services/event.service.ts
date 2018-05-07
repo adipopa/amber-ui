@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
+import { Event } from '@models/event.model';
+
 import { Subject } from 'rxjs/Subject';
 
 import { environment } from '@environment';
