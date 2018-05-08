@@ -1,6 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ViewController } from 'ionic-angular';
+
 import { CreateEventPage } from '@pages/core/create-event/create-event';
+
+import { Event } from '@models/event.model';
+
+import { EventService } from '@services/event.service';
+import { ToastService } from '@services/toast.service';
+
+import { EventPeoplePage } from '@components/event-card/event-people/event-people';
 
 /**
  * Generated class for the FeedPage page.
@@ -15,18 +23,49 @@ import { CreateEventPage } from '@pages/core/create-event/create-event';
 })
 export class FeedPage {
 
-  public events: Event[] = [];
+  public availableEvents: Event[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
+              private eventService: EventService, private toastService: ToastService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedPage');
+    this.eventService.availableEventsSubject.subscribe(
+      (events) => {
+        this.availableEvents = events;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.viewCtrl.didEnter.subscribe(
+      () => {
+        this.availableEvents = [];
+        this.eventService.getEventsAvailableToUser();
+      }
+    );
   }
 
   onCreateEvent() {
-    let parentCtrl = this.navParams.get('parentCtrl');
-    parentCtrl.push(CreateEventPage);
+    let coreCtrl = this.navParams.get('coreCtrl');
+    coreCtrl.push(CreateEventPage, {feedCtrl: this.navCtrl});
+  }
+
+  joinEvent(event: any) {
+    this.eventService.joinEvent(event).subscribe(
+      (response) => {
+        this.toastService.showToast('Joined event ' + event.title + '.', 'top');
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  showPeople(event: any) {
+    let coreCtrl = this.navParams.get('coreCtrl');
+    coreCtrl.push(EventPeoplePage, {users: event.users});
   }
 
 }

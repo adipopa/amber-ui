@@ -6,8 +6,6 @@ import { IntroPage } from './intro/intro';
 import { LoginPage } from './login/login';
 import { RegisterPage } from './register/register';
 
-import { AuthGuard } from './auth.guard';
-
 import { AuthService } from '@services/auth.service';
 
 @NgModule({
@@ -26,7 +24,6 @@ import { AuthService } from '@services/auth.service';
     RegisterPage
   ],
   providers: [
-    AuthGuard,
     AuthService
   ]
 })

@@ -47,8 +47,8 @@ export class SelectPlacePage {
     this.nearbyPlacesSubscription = this.placeService.nearbyPlacesSubject.subscribe(
       (places) => {
         this.nearbyPlaces = places;
+        console.log(places.length);
         this.loadMap();
-        this.nearbyPlacesSubscription.unsubscribe();
       }
     );
     this.placeService.queryPlaces();
@@ -114,6 +114,7 @@ export class SelectPlacePage {
   }
 
   submitChoice() {
+    this.selectedPlace.marker = null;
     this.locationSubject.next(this.selectedPlace);
     this.navCtrl.pop();
   }

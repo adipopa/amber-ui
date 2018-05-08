@@ -1,25 +1,44 @@
 <ion-card>
 
-  <img [src]="event.thumbnailPath">
-  <ion-fab right top>
-    <button ion-fab>
-      <ion-icon name="pin"></ion-icon>
-    </button>
-  </ion-fab>
-
   <ion-item>
-    <ion-icon name="event" item-start large></ion-icon>
-    <h2>{{ event.name }}</h2>
-    <p>{{ event.address }}</p>
+    <ion-icon name="calendar" item-start large></ion-icon>
+    <h2>{{ event.title }}</h2>
+    <p>{{ event.busyTime.startDate }} - {{ event.busyTime.endDate }}</p>
+  </ion-item>
+
+  <div class="card-image" [ngStyle]="{'background-image': 'url(' + event.place.thumbnail + ')'}">
+    <ion-fab right top edge>
+      <button ion-fab color="secondary">
+        <ion-icon name="pin"></ion-icon>
+      </button>
+    </ion-fab>
+  </div>
+
+  <ion-item class="place-details">
+    <ion-icon name="school" item-start large></ion-icon>
+    <h2>{{ event.place.name }}</h2>
+    <p>{{ event.place.address }}</p>
   </ion-item>
 
   <ion-item>
-    <span item-left>{{ event.eta }} min</span>
-    <span item-left>({{ event.distance }} km)</span>
-    <button ion-button icon-left clear item-end>
+    <span class="eta" item-left>{{ event.eta }} min</span>
+    <span item-left>({{ event.dist }} km)</span>
+    <button ion-button icon-left clear item-end (click)="showPeople()">
+      <ion-icon name="people"></ion-icon>
+      People
+    </button>
+
+    <button *ngIf="isAvailable; else joinButton" ion-button icon-left clear item-end (click)="joinEvent()">
       <ion-icon name="add"></ion-icon>
       Join
     </button>
+    <ng-template #joinButton>
+      <button ion-button icon-left clear item-end (click)="leaveEvent()">
+        <ion-icon name="close"></ion-icon>
+        Leave
+      </button>
+    </ng-template>
   </ion-item>
+
 
 </ion-card>

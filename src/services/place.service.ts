@@ -24,6 +24,8 @@ export class PlaceService {
   static readonly IMAGE_MAX_HEIGHT = '400';
   static readonly IMAGE_MAX_WIDTH = '400';
 
+  private nearbyPlaces: Place[] = [];
+
   public nearbyPlacesSubject: Subject<Place[]> = new Subject<Place[]>();
 
   constructor(private http: HTTP, private geolocation: Geolocation) {
@@ -34,8 +36,7 @@ export class PlaceService {
     return currLocation.lat.toString() + ',' + currLocation.lng.toString();
   }
 
-  private parseJsonToPlaceObjects(json: IPlaceArrayResponse) {
-    let parsedResult: Place[] = [];
+  private parseJsonToPlaceObjects(json: IPlaceArrayResponse, size: number) {
     for (let x of json.results) {
       let place = new Place();
       place.lng = x.geometry.location.lng;
@@ -47,18 +48,18 @@ export class PlaceService {
         this.queryImageReference(x.photos[0].photo_reference).then(
           (response) => {
             place.thumbnail = response.url;
-            parsedResult.push(place);
-            if (parsedResult.length == json.results.length) {
-              this.nearbyPlacesSubject.next(parsedResult);
+            this.nearbyPlaces.push(place);
+            if (this.nearbyPlaces.length == size) {
+              this.nearbyPlacesSubject.next(this.nearbyPlaces);
             }
           })
           .catch(error => {
             console.log(error);
           });
       } else {
-        parsedResult.push(place);
-        if (parsedResult.length == json.results.length) {
-          this.nearbyPlacesSubject.next(parsedResult);
+        this.nearbyPlaces.push(place);
+        if (this.nearbyPlaces.length == size) {
+          this.nearbyPlacesSubject.next(this.nearbyPlaces);
         }
       }
     }
@@ -79,6 +80,8 @@ export class PlaceService {
   public queryPlaces() {
     /** Returns a list of places for an event. */
 
+    this.nearbyPlaces = [];
+
     this.geolocation.getCurrentPosition().then((resp) => {
 
       let currLocation = {
@@ -86,20 +89,27 @@ export class PlaceService {
         lng: resp.coords.longitude
       };
 
-      let params = {
-        location: PlaceService.geolocationToString(currLocation),
-        key: environment.placesApiKey,
-        radius: '25000',
-        type: 'restaurant'
-      };
+      let types = [
+        'restaurant',
+        'school',
+      ];
 
-      this.http.get(PlaceService.PLACES_API_NEARBY_PATH, params, {}).then(
-        (response) => {
-          this.parseJsonToPlaceObjects(JSON.parse(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      types.forEach(type => {
+        let params = {
+          location: PlaceService.geolocationToString(currLocation),
+          key: environment.placesApiKey,
+          radius: '15000',
+          type: type
+        };
+
+        this.http.get(PlaceService.PLACES_API_NEARBY_PATH, params, {}).then(
+          (response) => {
+            this.parseJsonToPlaceObjects(JSON.parse(response.data), types.length * 20);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
 
     }).catch(error => {
       console.log(error)

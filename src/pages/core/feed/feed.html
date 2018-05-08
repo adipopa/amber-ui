@@ -14,22 +14,25 @@
 
 
 <ion-content padding>
-  <ion-grid>
-    <!--<ion-row *ngFor="let event of events">-->
-      <!--<ion-col col-12>-->
-        <!--<ion-label>{{ interest.category }}</ion-label>-->
-        <!--<ion-list>-->
-          <!--<chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="true"-->
-                <!--(onSelect)="onSelectOption(interest, option)" (onRemove)="onRemoveOption(interest, option)"></chip>-->
-        <!--</ion-list>-->
-        <!--<hr>-->
-      <!--</ion-col>-->
-    <!--</ion-row>-->
-  </ion-grid>
+
+  <div class="tip">
+    <h5>No available events.</h5>
+    <p>Events that people have created will be displayed here.</p>
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let event of availableEvents">
+      <event-card [event]="event"
+                  (onJoin)="joinEvent(event)"
+                  (onPeople)="showPeople(event)"
+                  [isAvailable]="true"></event-card>
+    </ion-item>
+  </ion-list>
 
   <ion-fab bottom right>
     <button ion-fab color="secondary" (click)="onCreateEvent()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
+
 </ion-content>

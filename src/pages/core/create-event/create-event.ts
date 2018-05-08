@@ -2,12 +2,16 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Event } from '@models/event.model';
 import { SelectPlacePage } from '@pages/core/create-event/select-place/select-place';
-import { Subject } from 'rxjs/Subject';
+
+import { Event } from '@models/event.model';
 import { Place } from '@models/place.model';
-import { Subscription } from 'rxjs/Subscription';
+
 import { EventService } from '@services/event.service';
+import { ToastService } from '@services/toast.service';
+
+import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
 
 /**
  * Generated class for the CreateEventPage page.
@@ -31,7 +35,8 @@ export class CreateEventPage {
   public locationSubject: Subject<Place> = new Subject<Place>();
   private locationSubscription: Subscription;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private eventService: EventService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private eventService: EventService, private toastService: ToastService) {
     this.eventForm = new FormGroup({
       title: new FormControl(this.event.title, [Validators.required]),
       place: new FormControl(this.event.place.id, [Validators.required]),
@@ -41,8 +46,8 @@ export class CreateEventPage {
         startTime: new FormControl(this.event.busyTime.startTime, [Validators.required]),
       }),
       busyTimeEnd: new FormGroup({
-        endDate: new FormControl(this.event.busyTime.endDate, []),
-        endTime: new FormControl(this.event.busyTime.endTime, []),
+        endDate: new FormControl(this.event.busyTime.endDate, [Validators.required]),
+        endTime: new FormControl(this.event.busyTime.endTime, [Validators.required]),
       })
     });
   }
@@ -66,15 +71,25 @@ export class CreateEventPage {
   }
 
   onCreateEvent() {
-    console.log(this.event);
-    // this.eventService.createEvent(this.event).subscribe(
-    //   (response) => {
-    //     console.log('Event with title: ' + this.event.title + ' successfully created.');
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+    if (this.eventForm.valid) {
+      this.eventService.createEvent(this.event).subscribe(
+        (response) => {
+          const message = 'Event ' + this.event.title + ' successfully created.';
+          this.toastService.showToast(message, 'top');
+          this.navCtrl.pop();
+          const feedCtrl = this.navParams.get('feedCtrl');
+          feedCtrl.parent.select(1);
+        },
+        (error) => {
+          console.log(error);
+          const message = 'Incorrect time frame or time frame already used, please change the date-time interval.';
+          this.toastService.showToast(message, 'bottom');
+        }
+      );
+    } else {
+      const message = 'Please complete the title, time frame and location of the event.';
+      this.toastService.showToast(message, 'bottom');
+    }
   }
 
   ionViewDidLoad() {

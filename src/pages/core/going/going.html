@@ -15,4 +15,18 @@
 
 <ion-content padding>
 
+  <div class="tip">
+    <h5>No upcoming events.</h5>
+    <p>Events that you join from the feed will be displayed here.</p>
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let event of userEvents">
+      <event-card [event]="event"
+                  (onLeave)="leaveEvent(event)"
+                  (onPeople)="showPeople(event)"
+                  [isAvailable]="false"></event-card>
+    </ion-item>
+  </ion-list>
+
 </ion-content>

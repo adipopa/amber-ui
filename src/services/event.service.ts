@@ -18,18 +18,20 @@ import { environment } from '@environment';
 @Injectable()
 export class EventService {
 
-  static readonly AVAILABLE_EVENTS_PATH = `${environment.baseURL}/event/available_events`;
   static readonly EVENT_PATH = `${environment.baseURL}/event`;
+  static readonly AVAILABLE_EVENTS_PATH = `${environment.baseURL}/event/available-events`;
+  static readonly USER_EVENTS_PATH = `${environment.baseURL}/event/user`;
 
   public availableEventsSubject: Subject<Event[]> = new Subject<Event[]>();
+  public userEventsSubject: Subject<Event[]> = new Subject<Event[]>();
+
+  static readonly EVENT_SEARCH_RADIUS = '15';
 
   constructor(private http: HttpClient, private geolocation: Geolocation) {
     console.log('Hello EventService Provider');
   }
 
-  getEventsAvailableToUser(userId: any) {
-    /** Returns a list of places for an event. */
-
+  getEventsAvailableToUser() {
     this.geolocation.getCurrentPosition().then((resp) => {
       let currLocation = {
         lat: resp.coords.latitude.toString(),
@@ -37,9 +39,9 @@ export class EventService {
       };
 
       let params = new HttpParams();
-      params = params.set('userId', userId);
       params = params.set('lat', currLocation.lat);
       params = params.set('lng', currLocation.lng);
+      params = params.set('searchRadius', EventService.EVENT_SEARCH_RADIUS);
 
       this.http.get<Event[]>(EventService.AVAILABLE_EVENTS_PATH, {params: params}).subscribe(
         (events) => {
@@ -50,12 +52,47 @@ export class EventService {
         }
       );
     });
-
-
   }
 
-  createEvent(event: Event) {
+  createEvent(event: any) {
     return this.http.post(EventService.EVENT_PATH, event);
+  }
+
+  getUserEvents() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      let currLocation = {
+        lat: resp.coords.latitude.toString(),
+        lng: resp.coords.longitude.toString()
+      };
+
+      let params = new HttpParams();
+      params = params.set('lat', currLocation.lat);
+      params = params.set('lng', currLocation.lng);
+
+      this.http.get<Event[]>(EventService.USER_EVENTS_PATH, {params: params}).subscribe(
+        (events) => {
+          this.userEventsSubject.next(events);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+  }
+
+  joinEvent(event: any) {
+    return this.http.patch(EventService.USER_EVENTS_PATH, {
+      eventId: event.id
+    });
+  }
+
+  leaveEvent(event: any) {
+    let params = new HttpParams();
+    params = params.set('eventId', event.id);
+
+    return this.http.delete(EventService.USER_EVENTS_PATH, {
+      params: params
+    });
   }
 
   getEvent(eventId: any) {
@@ -63,11 +100,6 @@ export class EventService {
     params = params.set('eventId', eventId);
 
     return this.http.get<Event>(EventService.EVENT_PATH, {params: params});
-  }
-
-
-  updateEvent(event: Event) {
-    return this.http.put(EventService.EVENT_PATH, event);
   }
 
   deleteEvent(eventId: any) {

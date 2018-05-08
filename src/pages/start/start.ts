@@ -28,14 +28,14 @@ export class StartPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad StartPage');
 
-    // Keeping the loading page up for 1 second, then proceed to the specific page based on the login status
+    // Keeping the loading page up for 2 seconds, then proceed to the specific page based on the login status
     setTimeout(() => {
       if (localStorage.getItem(AuthService.USER_TOKEN_KEY)) {
         this.resolveNextPage();
       } else {
         this.navCtrl.push(IntroPage);
       }
-    }, 1000);
+    }, 2000);
   }
 
   resolveNextPage() {

@@ -43,11 +43,9 @@ export class LoginPage {
   onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
       (data: any) => {
-        console.log(data);
         this.resolveNextPage();
       },
       (error: any) => {
-        console.log(error);
         this.loginError = true;
       });
   }

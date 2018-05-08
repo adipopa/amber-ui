@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Event } from '@models/event.model';
 
@@ -15,10 +15,26 @@ import { Event } from '@models/event.model';
 export class EventCardComponent {
 
   @Input() event: Event = new Event();
+  @Input() isAvailable: boolean;
+
+  @Output() onJoin: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onLeave: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onPeople: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
     console.log('Hello EventCardComponent Component');
+  }
 
+  joinEvent() {
+    this.onJoin.emit();
+  }
+
+  leaveEvent() {
+    this.onLeave.emit();
+  }
+
+  showPeople() {
+    this.onPeople.emit();
   }
 
 }

@@ -49,7 +49,6 @@ export class RegisterPage {
         this.proceedToLogin(userDetails);
       },
       (error: any) => {
-        console.log(error);
         this.registerError = true;
       });
   }
@@ -57,11 +56,9 @@ export class RegisterPage {
   proceedToLogin(userDetails) {
     this.authService.login(userDetails).subscribe(
       (data: any) => {
-        console.log(data);
         this.resolveNextPage();
       },
       (error: any) => {
-        console.log(error);
         this.navCtrl.pop();
         this.navCtrl.push(LoginPage);
       });
