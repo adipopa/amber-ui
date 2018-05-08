@@ -14,9 +14,25 @@
 
 
 <ion-content padding>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et varius sapien, nec pretium ex. Nam tempor ligula arcu, et vulputate odio pulvinar sit amet. Aliquam at suscipit lacus. Nullam pretium porttitor urna at luctus. In ac imperdiet purus, ut vestibulum nisi. Aenean id massa imperdiet, semper lectus sed, pretium erat. Quisque hendrerit posuere dolor, eget eleifend urna porttitor vel.<p>
-  <p>Suspendisse nec ultricies arcu, vitae facilisis elit. Integer faucibus justo ipsum, sit amet suscipit lorem hendrerit in. Nunc sit amet posuere est. Cras porta euismod vulputate. Sed auctor vel nunc a aliquet. Sed efficitur magna ligula, sed tincidunt lectus rhoncus nec. Praesent at sem sodales, blandit erat non, feugiat felis. Fusce aliquet felis neque, eget fringilla odio varius sed. Nullam rhoncus blandit maximus. Duis sagittis lorem a mi volutpat congue. Maecenas neque turpis, sagittis ac sollicitudin ac, pharetra a purus.</p>
-  <p>Nam mollis, felis non lacinia posuere, purus diam dapibus arcu, non vulputate lectus dolor ut enim. Ut sit amet tristique odio. Proin a quam elit. Aliquam vulputate consectetur felis a pharetra. Mauris blandit mollis luctus. In sed pulvinar orci. Donec imperdiet, odio eget sagittis mattis, odio risus venenatis tellus, a aliquet ante enim id orci. Donec lacinia odio non erat egestas posuere.</p>
-  <p>Maecenas est dui, semper at bibendum quis, malesuada eleifend sem. Donec erat nulla, ultricies condimentum consequat eget, vestibulum vitae risus. Vestibulum sed egestas metus. Pellentesque rutrum semper urna, at egestas tellus pellentesque non. Duis luctus, diam quis efficitur lobortis, risus risus dignissim purus, non eleifend dolor neque eu eros. Cras et elit eu ligula cursus porta nec et elit. Mauris consectetur, libero nec tincidunt rhoncus, tortor nisi ullamcorper velit, posuere pellentesque tellus arcu gravida arcu. Vestibulum laoreet, neque sed lobortis posuere, risus felis pellentesque justo, luctus condimentum turpis metus ac urna. Sed in consequat erat, sit amet consequat nisl. Nulla facilisi. Ut vel scelerisque ante, quis efficitur elit.</p>
-  <p>Aenean faucibus felis quis pretium tempus. Praesent fermentum mi nec odio condimentum, sed ultricies ipsum accumsan. Praesent malesuada sit amet lectus eget molestie. Donec imperdiet enim ut ultricies aliquet. Nam ac metus ante. Ut maximus ullamcorper massa ut vulputate. Sed at ante metus. In felis tortor, porta eget orci sit amet, sollicitudin ultrices elit. Proin placerat vestibulum odio, quis maximus neque imperdiet vel. Vivamus ex nibh, sollicitudin eu augue et, venenatis posuere est. Quisque sit amet est ipsum. Morbi in volutpat lacus, accumsan bibendum sapien. Duis a nisl orci.</p>
+
+  <div class="tip">
+    <h5>No available events.</h5>
+    <p>Events that people have created will be displayed here.</p>
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let event of availableEvents">
+      <event-card [event]="event"
+                  (onJoin)="joinEvent(event)"
+                  (onPeople)="showPeople(event)"
+                  [isAvailable]="true"></event-card>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab bottom right>
+    <button ion-fab color="secondary" (click)="onCreateEvent()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>

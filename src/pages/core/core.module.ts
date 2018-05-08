@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TabsPage } from './tabs/tabs';
 
 import { FeedPage } from './feed/feed';
 import { GoingPage } from './going/going';
@@ -11,42 +11,39 @@ import { PeoplePage } from './people/people';
 import { InterestsPage } from './interests/interests';
 import { ProfilePage } from './profile/profile';
 
-import { TabsPage } from './tabs/tabs';
+import { CreateEventPage } from './create-event/create-event';
+import { SelectPlacePage } from './create-event/select-place/select-place';
 
 import { ComponentsModule } from '@components/components.module';
 
-import { AuthHeaderInterceptor } from '@interceptors/auth.interceptor';
-
 @NgModule({
   declarations: [
+    TabsPage,
     FeedPage,
     GoingPage,
     NotificationsPage,
     PeoplePage,
     InterestsPage,
     ProfilePage,
-    TabsPage
+    CreateEventPage,
+    SelectPlacePage
   ],
   imports: [
     ComponentsModule,
     IonicPageModule.forChild(TabsPage)
   ],
   entryComponents: [
+    TabsPage,
     FeedPage,
     GoingPage,
     NotificationsPage,
     PeoplePage,
     InterestsPage,
     ProfilePage,
-    TabsPage
+    CreateEventPage,
+    SelectPlacePage
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHeaderInterceptor,
-      multi: true
-    }
-  ]
+  providers: []
 })
 export class CoreModule {
 }

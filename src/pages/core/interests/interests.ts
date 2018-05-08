@@ -4,6 +4,7 @@ import { NavController, NavParams, Slides } from 'ionic-angular';
 import { User } from '@models/user.model';
 import { Interest } from '@models/interest.model';
 import { UserService } from '@services/user.service';
+import { TabsPage } from '@pages/core/tabs/tabs';
 
 /**
  * Generated class for the InterestsPage page.
@@ -52,6 +53,7 @@ export class InterestsPage {
     this.userDetails.interests = this.selectedInterests;
     this.userService.updateUserDetails(this.userDetails).subscribe(
       () => {
+        this.navCtrl.setRoot(TabsPage, null, {animate: true, direction: 'forward'});
         console.log("User details updated successfully");
       },
       () => {

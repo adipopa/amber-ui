@@ -29,7 +29,7 @@ export class LoginPage {
               private authService: AuthService, private userService: UserService) {
 
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -43,11 +43,9 @@ export class LoginPage {
   onLogin() {
     this.authService.login(this.loginForm.value).subscribe(
       (data: any) => {
-        console.log(data);
         this.resolveNextPage();
       },
       (error: any) => {
-        console.log(error);
         this.loginError = true;
       });
   }

@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/map';
-
 import { environment } from '@environment'
 
 /*
@@ -50,14 +48,6 @@ export class AuthService {
   static getToken() {
     return localStorage.getItem(AuthService.USER_TOKEN_KEY);
   }
-
-  // public isAuthenticated(): boolean {
-  //   // get the token
-  //   const token = AuthService.getToken();
-  //   // return a boolean reflecting
-  //   // whether or not the token is expired
-  //   return tokenNotExpired(null, token);
-  // }
 
   static logout() {
     localStorage.removeItem(AuthService.USER_TOKEN_KEY);

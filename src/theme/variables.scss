@@ -36,9 +36,7 @@ $colors: (
   secondary:  #7c4dff,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222,
-  white:      #fff,
-  black:      #000
+  dark:       #222
 );
 
 
@@ -57,17 +55,19 @@ $button-md-background-color: color($colors, secondary, base);
 
 $toolbar-md-title-font-size: 1.6rem;
 
-$spinner-md-crescent-color: color($colors, secondary, base);
+$spinner-md-crescent-color: white;
 
-$toolbar-md-height: 42px;
+$toolbar-md-height: 52px;
 
 $text-input-md-show-valid-highlight: false;
 $text-input-md-show-invalid-highlight: false;
 
+$text-input-md-input-clear-icon-color: white;
+
 $tabs-md-background: color($colors, primary, base);
-$tabs-md-tab-icon-color: #fff;
+$tabs-md-tab-icon-color: white;
 $tabs-md-tab-icon-color-active: color($colors, secondary, base);
-$tabs-md-tab-min-height: 42px;
+$tabs-md-tab-min-height: 52px;
 
 // App Windows Variables
 // --------------------------------------------------

@@ -2,12 +2,17 @@ import { ErrorHandler, Injectable, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
-import { Firebase } from '@ionic-native/firebase';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { Geolocation } from "@ionic-native/geolocation";
+import { HTTP } from '@ionic-native/http';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Pro } from '@ionic/pro';
+
+import { SocketIoConfig, SocketIoModule } from "ng-socket-io";
 
 import { AmberApp } from './app.component';
 
@@ -16,8 +21,13 @@ import { StartPage } from '@pages/start/start';
 import { AuthModule } from '@pages/auth/auth.module';
 import { CoreModule } from '@pages/core/core.module';
 
+import { AuthHeaderInterceptor } from '@interceptors/auth.interceptor';
+
 import { UserService } from '@services/user.service';
 import { InterestsService } from '@services/interests.service';
+import { PlaceService } from '@services/place.service';
+import { EventService } from '@services/event.service';
+import { ToastService } from '@services/toast.service';
 
 Pro.init('fa980516', {
   appVersion: '0.0.1'
@@ -44,6 +54,8 @@ export class AmberErrorHandler implements ErrorHandler {
   }
 }
 
+const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options: {}};
+
 @NgModule({
   declarations: [
     AmberApp,
@@ -51,23 +63,33 @@ export class AmberErrorHandler implements ErrorHandler {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AmberApp),
+    IonicModule.forRoot(AmberApp, {tabsHideOnSubPages: true}),
+    SocketIoModule.forRoot(config),
     AuthModule,
     CoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     AmberApp,
-    StartPage
+    StartPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     IonicErrorHandler,
     {provide: ErrorHandler, useClass: AmberErrorHandler},
-    Firebase,
+    Geolocation,
+    HTTP,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHeaderInterceptor,
+      multi: true
+    },
     UserService,
-    InterestsService
+    InterestsService,
+    PlaceService,
+    EventService,
+    ToastService
   ]
 })
 export class AppModule {

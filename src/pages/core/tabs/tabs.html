@@ -6,15 +6,15 @@
         <ion-icon name="contact"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>John Doe</ion-title>
+    <ion-title>{{ currentUser.firstName + ' ' + currentUser.lastName }}</ion-title>
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content>
   <ion-tabs>
-    <ion-tab [root]="tab1Root" tabIcon="flame"></ion-tab>
-    <ion-tab [root]="tab2Root" tabIcon="paper-plane"></ion-tab>
+    <ion-tab [root]="tab1Root" [rootParams]="{coreCtrl: this.navCtrl}" tabIcon="flame"></ion-tab>
+    <ion-tab [root]="tab2Root" [rootParams]="{coreCtrl: this.navCtrl}" tabIcon="paper-plane"></ion-tab>
     <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>
     <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>
   </ion-tabs>

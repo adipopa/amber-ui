@@ -8,7 +8,8 @@ page-register {
   }
 
   ion-content {
-    background-color: color($colors, primary, base) !important;
+    background: url("/assets/imgs/background.jpg") no-repeat center center;
+    background-size: cover;
 
     div {
       width: 100%;
@@ -17,14 +18,20 @@ page-register {
 
         ion-row {
 
-          form {
+          img {
+            margin: 0 auto;
+            display: block;
+          }
 
-            .button-md {
-              width: 100%;
-              margin-top: 32px !important;
+          form {
+            margin-top: 8px;
+
+            ion-item {
+              background-color: transparent !important;
+              color: #fff !important;
             }
 
-            .input-md {
+            ion-label {
               color: #fff !important;
             }
 
@@ -38,9 +45,20 @@ page-register {
             }
 
             p {
-              font-size: 14px;
+              font-size: 16px;
               font-weight: 500;
               text-align: right;
+            }
+
+            .item-md.item-input.item-input-has-focus .item-inner,
+            .item-md.item-input.input-has-focus .item-inner {
+              border-bottom-color: #fff;
+              box-shadow: inset 0 -1px 0 0 #fff;
+            }
+
+            .button-md[type="submit"] {
+              width: 100%;
+              margin-top: 32px !important;
             }
           }
         }

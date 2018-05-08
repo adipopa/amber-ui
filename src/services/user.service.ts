@@ -13,7 +13,7 @@ import { environment } from '@environment';
 @Injectable()
 export class UserService {
 
-  static readonly USER_DETAILS_PATH = environment.baseURL + '/user';
+  static readonly USER_DETAILS_PATH = `${environment.baseURL}/user`;
 
   constructor(public http: HttpClient) {
     console.log('Hello UserService Provider');
@@ -28,6 +28,10 @@ export class UserService {
     console.log("Updating user details on server");
     return this.http.put<User>(UserService.USER_DETAILS_PATH, user);
     // return this.http.put<User>(`${UserService.USER_DETAILS_PATH}/${user.id}`, user);
+  }
+
+  getLocation() {
+
   }
 
 }

@@ -1,7 +1,8 @@
 page-intro {
 
   ion-content {
-    background-color: color($colors, primary, base) !important;
+    background: url("/assets/imgs/background.jpg") no-repeat center center;
+    background-size: cover;
 
     div [ion-fixed] {
       width: 100%;
@@ -10,7 +11,7 @@ page-intro {
         height: 100%;
 
         .title-content {
-          margin-top: 40px;
+          margin-top: 48px;
         }
 
         .center-content {
@@ -30,14 +31,20 @@ page-intro {
           margin: 0 auto;
         }
 
-        h4, h2, h1, p {
+        h5, h4, h2, h1, p {
           color: #fff;
           text-align: center;
           margin: 0;
         }
 
         p {
-          font-size: 14px;
+          font-weight: bold;
+          font-size: 16px;
+        }
+
+        h5 {
+          margin-bottom: 40px !important;
+          font-size: 18px;
         }
 
         h2 {

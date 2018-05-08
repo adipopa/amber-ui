@@ -13,7 +13,7 @@ import { environment } from '@environment';
 @Injectable()
 export class InterestsService {
 
-  static readonly GET_INTERESTS_PATH = environment.baseURL + '/interests';
+  static readonly GET_INTERESTS_PATH = `${environment.baseURL}/interests`;
 
   constructor(public http: HttpClient) {
     console.log('Hello InterestsService Provider');
