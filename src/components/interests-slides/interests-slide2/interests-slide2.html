@@ -4,7 +4,7 @@
     <ion-col col-12>
       <ion-label>{{ interest.category }}</ion-label>
       <ion-list>
-        <chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="true"
+        <chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="true" [isSelected]="option.isSelected"
               (onSelect)="onSelectOption(interest, option)" (onRemove)="onRemoveOption(interest, option)"></chip>
       </ion-list>
       <hr>

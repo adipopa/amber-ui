@@ -21,6 +21,12 @@ export class EventCardComponent {
   @Output() onLeave: EventEmitter<any> = new EventEmitter<any>();
   @Output() onPeople: EventEmitter<any> = new EventEmitter<any>();
 
+  // TODO: Complete iconTypes
+  public iconTypes = {
+    default: 'compass',
+    restaurant: 'restaurant'
+  };
+
   constructor() {
     console.log('Hello EventCardComponent Component');
   }

@@ -3,19 +3,20 @@
   <ion-item>
     <ion-icon name="calendar" item-start large></ion-icon>
     <h2>{{ event.title }}</h2>
+    <p>{{ event.description }}</p>
     <p>{{ event.busyTime.startDate }} - {{ event.busyTime.endDate }}</p>
   </ion-item>
 
-  <div class="card-image" [ngStyle]="{'background-image': 'url(' + event.place.thumbnail + ')'}">
-    <ion-fab right top edge>
-      <button ion-fab color="secondary">
-        <ion-icon name="pin"></ion-icon>
-      </button>
-    </ion-fab>
-  </div>
+  <ion-fab right top>
+    <button ion-fab color="black">
+      <ion-icon name="pin"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <div class="card-image" [ngStyle]="{'background-image': 'url(' + event.place.thumbnail + ')'}"></div>
 
   <ion-item class="place-details">
-    <ion-icon name="school" item-start large></ion-icon>
+    <ion-icon [name]="iconTypes['default']" item-start large></ion-icon>
     <h2>{{ event.place.name }}</h2>
     <p>{{ event.place.address }}</p>
   </ion-item>

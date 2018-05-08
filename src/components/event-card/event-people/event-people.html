@@ -13,17 +13,16 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
   <ion-grid no-padding>
     <ion-row>
-      <ion-col col-12>
+      <ion-col col-12 align-items-center>
         <ion-list>
           <button ion-item *ngFor="let user of users" (click)="selectUser()">
-            <ion-label>
-              <ion-icon name="contact"></ion-icon>
-            </ion-label>
-            {{ user.firstName + ' ' + user.lastName }}
+            <ion-icon name="contact" item-start large></ion-icon>
+            <h2>{{ user.firstName + ' ' + user.lastName }}</h2>
+            <p>{{ user.username }}</p>
           </button>
         </ion-list>
       </ion-col>

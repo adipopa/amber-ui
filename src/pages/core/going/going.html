@@ -15,7 +15,7 @@
 
 <ion-content padding>
 
-  <div class="tip">
+  <div *ngIf="userEvents.length == 0 && !isLoading" class="tip">
     <h5>No upcoming events.</h5>
     <p>Events that you join from the feed will be displayed here.</p>
   </div>
@@ -28,5 +28,7 @@
                   [isAvailable]="false"></event-card>
     </ion-item>
   </ion-list>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
 
 </ion-content>

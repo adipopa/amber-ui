@@ -19,16 +19,11 @@ page-intro {
         }
 
         .bottom-content {
-          margin-top: 8px;
+          margin-top: 32px;
         }
 
-        button, .g-signin2 {
+        button {
           width: 100%;
-        }
-
-        .g-signin2 > div{
-          width: 100% !important;
-          margin: 0 auto;
         }
 
         h5, h4, h2, h1, p {
@@ -43,7 +38,7 @@ page-intro {
         }
 
         h5 {
-          margin-bottom: 40px !important;
+          margin-bottom: 48px !important;
           font-size: 18px;
         }
 

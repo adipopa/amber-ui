@@ -44,6 +44,9 @@ export class PlaceService {
       place.name = x.name;
       place.id = x.place_id;
       place.address = x.vicinity;
+      place.type = x.types[0];
+      // TODO: Delete the console.log
+      console.log(place.type);
       if (x.photos != null) {
         this.queryImageReference(x.photos[0].photo_reference).then(
           (response) => {

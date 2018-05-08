@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { IntroPage } from '../../auth/intro/intro';
+import { IntroPage } from '@pages/auth/intro/intro';
+import { InterestsPage } from '@pages/core/interests/interests';
+
+import { User } from '@models/user.model';
 
 import { AuthService } from '@services/auth.service';
 
@@ -18,11 +21,18 @@ import { AuthService } from '@services/auth.service';
 })
 export class ProfilePage {
 
+  public user: User = new User();
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfilePage');
+    this.user = this.navParams.get('user');
+  }
+
+  onEditProfile() {
+    this.navCtrl.push(InterestsPage, {user: this.user});
   }
 
   onLogout() {
