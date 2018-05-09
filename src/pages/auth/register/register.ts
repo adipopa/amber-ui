@@ -23,9 +23,9 @@ import { UserService } from '@services/user.service';
 })
 export class RegisterPage {
 
-  private registerForm: FormGroup;
+  public registerForm: FormGroup;
 
-  private registerError: boolean;
+  public registerError: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               private authService: AuthService, private userService: UserService) {

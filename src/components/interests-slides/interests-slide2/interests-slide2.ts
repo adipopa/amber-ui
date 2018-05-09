@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ViewController } from 'ionic-angular';
 
 import { Interest } from '@models/interest.model';
 import { Option } from '@models/option.model';
 
 import { InterestsService } from '@services/interests.service';
-import { ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the InterestsSlide2Component component.
@@ -43,8 +43,9 @@ export class InterestsSlide2Component {
           interests[category].forEach(label => {
             let newOption = new Option();
             newOption.label = label;
-            if (this.selectedInterests[category] != null) {
-              let selectedOption = this.selectedInterests[category].options.find(label => newOption.label === label);
+            let selectedInterest = this.selectedInterests.find(interest => interest.category == category);
+            if (selectedInterest != null) {
+              let selectedOption = selectedInterest.options.find(option => option.label == newOption.label);
               if (selectedOption != null) {
                 newOption.isSelected = true;
               }

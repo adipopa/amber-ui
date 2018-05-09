@@ -38,17 +38,30 @@ export class SelectPlacePage {
 
   private lastInfoWindow = null;
 
+  public isLoading = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private placeService: PlaceService, private geolocation: Geolocation) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectPlacePage');
+    this.populateNearbyPlaces();
+  }
+
+  populateNearbyPlaces() {
+    this.isLoading = true;
     this.nearbyPlacesSubscription = this.placeService.nearbyPlacesSubject.subscribe(
       (places) => {
         this.nearbyPlaces = places;
-        console.log(places.length);
+        this.nearbyPlaces.sort(function(a, b){
+          if(a.name < b.name) return -1;
+          if(a.name > b.name) return 1;
+          return 0;
+        });
         this.loadMap();
+        this.isLoading = false;
+        this.nearbyPlacesSubscription.unsubscribe();
       }
     );
     this.placeService.queryPlaces();
@@ -66,7 +79,7 @@ export class SelectPlacePage {
 
       let mapOptions = {
         center: latLng,
-        zoom: 15,
+        zoom: 16,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
@@ -124,9 +137,13 @@ export class SelectPlacePage {
       <div style="width: 210px; text-align: center">
         <h4>${place.name}</h4>
         <p>${place.address}</p><br>
-        <img src="${place.thumbnail}" style="width: 200px; height: 100px; object-fit: cover">
-      </div>
     `;
+
+    if (place.thumbnail.length > 0) {
+      content += `<img src="${place.thumbnail}" style="width: 200px; height: 100px; object-fit: cover">`;
+    }
+
+    content += `</div>`;
 
     return new google.maps.InfoWindow({
       content: content

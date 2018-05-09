@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -26,7 +26,10 @@ import { Subject } from 'rxjs/Subject';
 })
 export class CreateEventPage {
 
-  @ViewChild('description') description: ElementRef;
+  @HostListener('input', ['$event.target'])
+  onInput(textArea:HTMLTextAreaElement): void {
+    CreateEventPage.adjust(textArea);
+  }
 
   public event: Event = new Event();
 
@@ -35,7 +38,7 @@ export class CreateEventPage {
   public locationSubject: Subject<Place> = new Subject<Place>();
   private locationSubscription: Subscription;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public element: ElementRef,
               private eventService: EventService, private toastService: ToastService) {
     this.eventForm = new FormGroup({
       title: new FormControl(this.event.title, [Validators.required]),
@@ -52,6 +55,10 @@ export class CreateEventPage {
     });
   }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CreateEventPage');
+  }
+
   selectPlace() {
     this.locationSubscription = this.locationSubject.subscribe(
       (place) => {
@@ -61,13 +68,6 @@ export class CreateEventPage {
       }
     );
     this.navCtrl.push(SelectPlacePage, {locationSubject: this.locationSubject});
-  }
-
-  resize() {
-    let element = this.description['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
-    let scrollHeight = element.scrollHeight;
-    element.style.height = scrollHeight + 'px';
-    this.description['_elementRef'].nativeElement.style.height = (scrollHeight + 16) + 'px';
   }
 
   onCreateEvent() {
@@ -92,8 +92,9 @@ export class CreateEventPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateEventPage');
+  static adjust(textArea: HTMLTextAreaElement) {
+    textArea.style.overflow = 'hidden';
+    textArea.style.height = 'auto';
+    textArea.style.height = textArea.scrollHeight + 'px';
   }
-
 }

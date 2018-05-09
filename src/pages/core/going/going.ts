@@ -74,9 +74,25 @@ export class GoingPage {
     );
   }
 
+  deleteEvent(event: any) {
+    this.eventService.deleteEvent(event).subscribe(
+      (response) => {
+        this.toastService.showToast('You\'ve deleted the event ' + event.title + '.', 'top');
+        this.populateUserEvents();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   showPeople(event: any) {
     let coreCtrl = this.navParams.get('coreCtrl');
     coreCtrl.push(EventPeoplePage, {users: event.users});
   }
 
+  refreshUserEvents(refresher) {
+    this.populateUserEvents();
+    refresher.complete();
+  }
 }

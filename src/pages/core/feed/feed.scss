@@ -3,29 +3,12 @@ page-feed {
   ion-content {
 
     .scroll-content {
-      padding: 20px 0 !important;
-    }
-
-    div.tip {
-      position: absolute;
-      top: 45%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80%;
-      text-align: center;
-
-      h5 {
-        font-size: 24px;
-      }
-
-      p {
-        font-size: 16px;
-      }
+      padding: 20px 0 32px !important;
     }
 
     ion-fab[bottom] {
       right: 16px !important;
-      bottom: 24px !important;
+      bottom: 16px !important;
 
       button {
         width: 52px;

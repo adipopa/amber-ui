@@ -86,4 +86,8 @@ export class FeedPage {
     coreCtrl.push(EventPeoplePage, {users: event.users});
   }
 
+  refreshAvailableEvents(refresher) {
+    this.populateAvailableEvents();
+    refresher.complete();
+  }
 }

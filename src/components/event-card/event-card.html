@@ -13,10 +13,10 @@
     </button>
   </ion-fab>
 
-  <div class="card-image" [ngStyle]="{'background-image': 'url(' + event.place.thumbnail + ')'}"></div>
+  <div class="card-image" [ngStyle]="{'background-image': 'url(' + (event.place.thumbnail || 'assets/imgs/default-card.png') + ')'}"></div>
 
   <ion-item class="place-details">
-    <ion-icon [name]="iconTypes['default']" item-start large></ion-icon>
+    <ion-icon [name]="iconTypes[event.place.type] || 'compass'" item-start large></ion-icon>
     <h2>{{ event.place.name }}</h2>
     <p>{{ event.place.address }}</p>
   </ion-item>
@@ -29,15 +29,21 @@
       People
     </button>
 
-    <button *ngIf="isAvailable; else joinButton" ion-button icon-left clear item-end (click)="joinEvent()">
+    <button *ngIf="isAvailable; else leaveButton" ion-button icon-left clear item-end (click)="joinEvent()">
       <ion-icon name="add"></ion-icon>
       Join
     </button>
-    <ng-template #joinButton>
-      <button ion-button icon-left clear item-end (click)="leaveEvent()">
+    <ng-template #leaveButton>
+      <button *ngIf="event.users.length > 1; else deleteButton" ion-button icon-left clear item-end (click)="leaveEvent()">
         <ion-icon name="close"></ion-icon>
         Leave
       </button>
+      <ng-template #deleteButton>
+        <button ion-button icon-left clear item-end color="danger" (click)="deleteEvent()">
+          <ion-icon name="close"></ion-icon>
+          Delete
+        </button>
+      </ng-template>
     </ng-template>
   </ion-item>
 
