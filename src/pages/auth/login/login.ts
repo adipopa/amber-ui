@@ -7,6 +7,7 @@ import { TabsPage } from '@pages/core/tabs/tabs';
 
 import { AuthService } from '@services/auth.service';
 import { UserService } from '@services/user.service';
+import { ToastService } from '@services/toast.service';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,10 +24,8 @@ export class LoginPage {
 
   public loginForm: FormGroup;
 
-  public loginError: boolean;
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
-              private authService: AuthService, private userService: UserService) {
+              private authService: AuthService, private userService: UserService, private toastService: ToastService) {
 
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -36,18 +35,23 @@ export class LoginPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-
-    this.loginError = false;
   }
 
   onLogin() {
-    this.authService.login(this.loginForm.value).subscribe(
-      (data: any) => {
-        this.resolveNextPage();
-      },
-      (error: any) => {
-        this.loginError = true;
-      });
+    if (this.loginForm.valid) {
+      this.authService.login(this.loginForm.value).subscribe(
+        (data: any) => {
+          this.resolveNextPage();
+        },
+        (error: any) => {
+          const message = 'Invalid credentials, please try again.';
+          this.toastService.showToast(message, 'bottom');
+        });
+    }
+    else {
+      const message = 'Please complete the username and password.';
+      this.toastService.showToast(message, 'bottom');
+    }
   }
 
   onForgotPassword() {

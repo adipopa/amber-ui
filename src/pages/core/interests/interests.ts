@@ -48,6 +48,12 @@ export class InterestsPage {
   goToSlide(index: number) {
     this.slides.slideTo(index, 500);
     this.slideIndex = index;
+    if (index == 2) {
+      if (this.userDetails.firstName.length == 0 && this.userDetails.lastName.length == 0) {
+        this.userDetails.firstName = 'Mr.';
+        this.userDetails.lastName = 'Nobody';
+      }
+    }
   }
 
   onInterestsChanged(selectedInterests: Interest[]) {

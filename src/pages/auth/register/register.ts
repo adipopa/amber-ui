@@ -9,6 +9,7 @@ import { TabsPage } from '@pages/core/tabs/tabs';
 
 import { AuthService } from '@services/auth.service';
 import { UserService } from '@services/user.service';
+import { ToastService } from '@services/toast.service';
 
 /**
  * Generated class for the RegisterPage page.
@@ -25,10 +26,8 @@ export class RegisterPage {
 
   public registerForm: FormGroup;
 
-  public registerError: boolean;
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
-              private authService: AuthService, private userService: UserService) {
+              private authService: AuthService, private userService: UserService, private toastService: ToastService) {
 
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -38,19 +37,23 @@ export class RegisterPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
-
-    this.registerError = false;
   }
 
   onRegister() {
-    const userDetails = this.registerForm.value;
-    this.authService.register(userDetails).subscribe(
-      (data: any) => {
-        this.proceedToLogin(userDetails);
-      },
-      (error: any) => {
-        this.registerError = true;
-      });
+    if (this.registerForm.valid) {
+      const userDetails = this.registerForm.value;
+      this.authService.register(userDetails).subscribe(
+        (data: any) => {
+          this.proceedToLogin(userDetails);
+        },
+        (error: any) => {
+          const message = 'This username is already taken.';
+          this.toastService.showToast(message, 'bottom');
+        });
+    } else {
+      const message = 'Please complete the username and password.';
+      this.toastService.showToast(message, 'bottom');
+    }
   }
 
   proceedToLogin(userDetails) {
