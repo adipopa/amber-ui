@@ -13,20 +13,29 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <div class="tip">
+  <ion-refresher [enabled]="!isLoading" (ionRefresh)="refreshUserEvents($event)">
+    <ion-refresher-content pullingIcon="refresh"
+                           pullingText="Pull to refresh events">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="userEvents.length == 0 && !isLoading" class="tip">
     <h5>No upcoming events.</h5>
     <p>Events that you join from the feed will be displayed here.</p>
   </div>
 
-  <ion-list>
+  <ion-list no-lines>
     <ion-item *ngFor="let event of userEvents">
       <event-card [event]="event"
                   (onLeave)="leaveEvent(event)"
+                  (onDelete)="deleteEvent(event)"
                   (onPeople)="showPeople(event)"
                   [isAvailable]="false"></event-card>
     </ion-item>
   </ion-list>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
 
 </ion-content>

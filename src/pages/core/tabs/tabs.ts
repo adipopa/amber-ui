@@ -9,6 +9,8 @@ import { PeoplePage } from '../people/people';
 import { ProfilePage } from '../profile/profile';
 
 import { User } from '@models/user.model';
+import { Interest } from '@models/interest.model';
+import { Option } from '@models/option.model';
 
 import { UserService } from '@services/user.service';
 
@@ -34,18 +36,35 @@ export class TabsPage {
   }
 
   onProfile() {
-    this.navCtrl.push(ProfilePage);
+    this.navCtrl.push(ProfilePage, {user: this.currentUser});
   }
 
   getCurrentUser() {
     this.userService.getUserDetails().subscribe(
       (user) => {
         this.currentUser = user;
+        this.populateInterests();
       },
       (error) => {
         console.log("Couldn't retrieve user details.");
       }
     );
+  }
+
+  populateInterests() {
+    let interests: any[] = this.currentUser.interests;
+    let newInterests: Interest[] = [];
+    for (let category in interests) {
+      let newInterest = new Interest();
+      newInterest.category = category;
+      interests[category].forEach(label => {
+        let newOption = new Option();
+        newOption.label = label;
+        newInterest.options.push(newOption);
+      });
+      newInterests.push(newInterest);
+    }
+    this.currentUser.interests = newInterests;
   }
 
 }

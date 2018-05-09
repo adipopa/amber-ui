@@ -29,16 +29,18 @@
         </ion-list>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-12 style="padding: 0 20px">
+    <ion-row style="padding: 0 20px">
+      <ion-col col-12>
         <div #map id="map"></div>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-12 style="padding: 0 20px">
+    <ion-row align-items-end class="flex-buttons">
+      <ion-col col-12>
         <button ion-button (click)="submitChoice()">Done</button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
 
 </ion-content>

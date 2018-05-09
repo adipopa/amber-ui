@@ -58,6 +58,15 @@ export class EventService {
     return this.http.post(EventService.EVENT_PATH, event);
   }
 
+  deleteEvent(event: any) {
+    let params = new HttpParams();
+    params = params.set('eventId', event.id);
+
+    return this.http.delete(EventService.EVENT_PATH, {
+      params: params
+    });
+  }
+
   getUserEvents() {
     this.geolocation.getCurrentPosition().then((resp) => {
       let currLocation = {
@@ -93,20 +102,6 @@ export class EventService {
     return this.http.delete(EventService.USER_EVENTS_PATH, {
       params: params
     });
-  }
-
-  getEvent(eventId: any) {
-    let params = new HttpParams();
-    params = params.set('eventId', eventId);
-
-    return this.http.get<Event>(EventService.EVENT_PATH, {params: params});
-  }
-
-  deleteEvent(eventId: any) {
-    let params = new HttpParams();
-    params = params.set('eventId', eventId);
-
-    return this.http.delete(EventService.EVENT_PATH, {params: params});
   }
 
 }

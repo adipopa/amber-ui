@@ -13,14 +13,20 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <div class="tip">
+  <ion-refresher (ionRefresh)="refreshAvailableEvents($event)">
+    <ion-refresher-content pullingIcon="refresh"
+                           pullingText="Pull to refresh feed">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="availableEvents.length == 0 && !isLoading" class="tip">
     <h5>No available events.</h5>
     <p>Events that people have created will be displayed here.</p>
   </div>
 
-  <ion-list>
+  <ion-list no-lines>
     <ion-item *ngFor="let event of availableEvents">
       <event-card [event]="event"
                   (onJoin)="joinEvent(event)"
@@ -34,5 +40,7 @@
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
 
 </ion-content>

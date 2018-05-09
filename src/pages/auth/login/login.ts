@@ -21,9 +21,9 @@ import { UserService } from '@services/user.service';
 })
 export class LoginPage {
 
-  private loginForm: FormGroup;
+  public loginForm: FormGroup;
 
-  private loginError: boolean;
+  public loginError: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder,
               private authService: AuthService, private userService: UserService) {

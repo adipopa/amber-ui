@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ViewController } from 'ionic-angular';
 
 import { Interest } from '@models/interest.model';
 import { Option } from '@models/option.model';
@@ -17,29 +18,43 @@ import { InterestsService } from '@services/interests.service';
 })
 export class InterestsSlide2Component {
 
+  @Input() selectedInterests: Interest[] = [];
+
   @Output() selectedInterestsChange: EventEmitter<Interest[]> = new EventEmitter();
 
   public interests: Interest[] = [];
 
-  constructor(private interestsService: InterestsService) {
+  constructor(public viewCtrl: ViewController, private interestsService: InterestsService) {
     console.log('Hello InterestsSlide2Component Component');
-    this.populateInterests();
+    this.viewCtrl.didEnter.subscribe(
+      () => {
+        this.populateInterests();
+      }
+    );
   }
 
   populateInterests() {
     this.interestsService.getAllInterests().subscribe(
       (interests) => {
+        let newInterests: Interest[] = [];
         for (let category in interests) {
           let newInterest = new Interest();
           newInterest.category = category;
           interests[category].forEach(label => {
             let newOption = new Option();
             newOption.label = label;
+            let selectedInterest = this.selectedInterests.find(interest => interest.category == category);
+            if (selectedInterest != null) {
+              let selectedOption = selectedInterest.options.find(option => option.label == newOption.label);
+              if (selectedOption != null) {
+                newOption.isSelected = true;
+              }
+            }
             newInterest.options.push(newOption);
           });
-          this.interests.push(newInterest);
+          newInterests.push(newInterest);
         }
-        console.log(this.interests);
+        this.interests = newInterests;
       },
       (error) => {
         console.log(error);

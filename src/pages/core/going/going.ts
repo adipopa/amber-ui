@@ -8,6 +8,8 @@ import { ToastService } from '@services/toast.service';
 
 import { EventPeoplePage } from '@components/event-card/event-people/event-people';
 
+import { Subscription } from 'rxjs/Subscription';
+
 /**
  * Generated class for the GoingPage page.
  *
@@ -23,32 +25,60 @@ export class GoingPage {
 
   public userEvents: Event[] = [];
 
+  private userEventsSubscription: Subscription;
+
+  public isLoading = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               private eventService: EventService, private toastService: ToastService) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GoingPage');
-    this.eventService.userEventsSubject.subscribe(
+    console.log('ionViewDidLoad FeedPage');
+    this.viewCtrl.didEnter.subscribe(
+      () => {
+        this.populateUserEvents();
+      }
+    );
+    this.viewCtrl.didLeave.subscribe(
+      () => {
+        this.userEventsSubscription.unsubscribe();
+      }
+    );
+  }
+
+  populateUserEvents() {
+    this.userEvents = [];
+    this.isLoading = true;
+    this.userEventsSubscription = this.eventService.userEventsSubject.subscribe(
       (events) => {
         this.userEvents = events;
+        this.isLoading = false;
       },
       (error) => {
         console.log(error);
       }
     );
-    this.viewCtrl.didEnter.subscribe(
-      () => {
-        this.userEvents = [];
-        this.eventService.getUserEvents();
+    this.eventService.getUserEvents();
+  }
+
+  leaveEvent(event: any) {
+    this.eventService.leaveEvent(event).subscribe(
+      (response) => {
+        this.toastService.showToast('You\'ve left the event ' + event.title + '.', 'top');
+        this.populateUserEvents();
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }
 
-  leaveEvent(event: any) {
-    this.eventService.joinEvent(event).subscribe(
+  deleteEvent(event: any) {
+    this.eventService.deleteEvent(event).subscribe(
       (response) => {
-        this.toastService.showToast('You\'ve left the event ' + event.title + '.', 'top');
+        this.toastService.showToast('You\'ve deleted the event ' + event.title + '.', 'top');
+        this.populateUserEvents();
       },
       (error) => {
         console.log(error);
@@ -61,4 +91,8 @@ export class GoingPage {
     coreCtrl.push(EventPeoplePage, {users: event.users});
   }
 
+  refreshUserEvents(refresher) {
+    this.populateUserEvents();
+    refresher.complete();
+  }
 }

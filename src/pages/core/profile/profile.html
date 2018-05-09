@@ -7,14 +7,55 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>profile</ion-title>
+    <ion-title>My profile</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <button ion-button (click)="onLogout()">Logout</button>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col col-12>
+        <h1>{{ user.firstName + ' ' + user.lastName }}</h1>
+        <img src="assets/imgs/profile.jpg">
+        <p>
+          <ion-icon name="body"></ion-icon>
+          Age: {{ user.age }}
+        </p>
+        <p>
+          <ion-icon name="book"></ion-icon>
+          Bio: {{ user.bio }}
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-item-divider></ion-item-divider>
+    <ion-row class="interests">
+      <ion-col col-12>
+        <h5>
+          <ion-icon name="ribbon"></ion-icon>
+          Interests:
+        </h5>
+        <ion-grid no-padding>
+          <ion-row *ngFor="let interest of user.interests">
+            <ion-col col-12>
+              <ion-label>{{ interest.category }}</ion-label>
+              <ion-list>
+                <chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="false"></chip>
+              </ion-list>
+              <hr>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-end class="flex-buttons">
+      <ion-col col-12>
+        <button ion-button (click)="onEditProfile()">Edit profile</button>
+        <button ion-button color="danger" (click)="onLogout()">Logout</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

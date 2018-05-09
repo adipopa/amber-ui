@@ -14,7 +14,6 @@ export class ChipComponent {
 
   @Input() label: string;
   @Input() selectable: boolean;
-  @Input() chipColor = "primary";
   @Input() isSelected = false;
 
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
@@ -27,14 +26,12 @@ export class ChipComponent {
   select() {
     if (this.selectable) {
       this.isSelected = true;
-      this.chipColor = "secondary";
       this.onSelect.emit();
     }
   }
 
   remove() {
     this.isSelected = false;
-    this.chipColor = "primary";
     this.onRemove.emit();
   }
 

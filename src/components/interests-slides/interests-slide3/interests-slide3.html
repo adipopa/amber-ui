@@ -13,8 +13,7 @@
     <ion-col col-12>
       <ion-label>{{ interest.category }}</ion-label>
       <ion-list>
-        <chip *ngFor="let option of interest.options" [label]="option.label"
-              [selectable]="false" chipColor="secondary"></chip>
+        <chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="false"></chip>
       </ion-list>
       <hr>
     </ion-col>

@@ -10,6 +10,8 @@ import { ToastService } from '@services/toast.service';
 
 import { EventPeoplePage } from '@components/event-card/event-people/event-people';
 
+import { Subscription } from 'rxjs/Subscription';
+
 /**
  * Generated class for the FeedPage page.
  *
@@ -25,26 +27,41 @@ export class FeedPage {
 
   public availableEvents: Event[] = [];
 
+  private availableEventsSubscription: Subscription;
+
+  public isLoading = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
               private eventService: EventService, private toastService: ToastService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FeedPage');
-    this.eventService.availableEventsSubject.subscribe(
+    this.viewCtrl.didEnter.subscribe(
+      () => {
+        this.populateAvailableEvents();
+      }
+    );
+    this.viewCtrl.didLeave.subscribe(
+      () => {
+        this.availableEventsSubscription.unsubscribe();
+      }
+    );
+  }
+
+  populateAvailableEvents() {
+    this.availableEvents = [];
+    this.isLoading = true;
+    this.availableEventsSubscription = this.eventService.availableEventsSubject.subscribe(
       (events) => {
         this.availableEvents = events;
+        this.isLoading = false;
       },
       (error) => {
         console.log(error);
       }
     );
-    this.viewCtrl.didEnter.subscribe(
-      () => {
-        this.availableEvents = [];
-        this.eventService.getEventsAvailableToUser();
-      }
-    );
+    this.eventService.getEventsAvailableToUser();
   }
 
   onCreateEvent() {
@@ -56,6 +73,7 @@ export class FeedPage {
     this.eventService.joinEvent(event).subscribe(
       (response) => {
         this.toastService.showToast('Joined event ' + event.title + '.', 'top');
+        this.populateAvailableEvents();
       },
       (error) => {
         console.log(error);
@@ -68,4 +86,8 @@ export class FeedPage {
     coreCtrl.push(EventPeoplePage, {users: event.users});
   }
 
+  refreshAvailableEvents(refresher) {
+    this.populateAvailableEvents();
+    refresher.complete();
+  }
 }

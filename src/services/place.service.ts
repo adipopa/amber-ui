@@ -25,6 +25,7 @@ export class PlaceService {
   static readonly IMAGE_MAX_WIDTH = '400';
 
   private nearbyPlaces: Place[] = [];
+  private placesCount = 0;
 
   public nearbyPlacesSubject: Subject<Place[]> = new Subject<Place[]>();
 
@@ -36,7 +37,8 @@ export class PlaceService {
     return currLocation.lat.toString() + ',' + currLocation.lng.toString();
   }
 
-  private parseJsonToPlaceObjects(json: IPlaceArrayResponse, size: number) {
+  private parseJsonToPlaceObjects(json: IPlaceArrayResponse) {
+    this.placesCount += json.results.length;
     for (let x of json.results) {
       let place = new Place();
       place.lng = x.geometry.location.lng;
@@ -44,12 +46,13 @@ export class PlaceService {
       place.name = x.name;
       place.id = x.place_id;
       place.address = x.vicinity;
+      place.type = x.types[0];
       if (x.photos != null) {
         this.queryImageReference(x.photos[0].photo_reference).then(
           (response) => {
             place.thumbnail = response.url;
             this.nearbyPlaces.push(place);
-            if (this.nearbyPlaces.length == size) {
+            if (this.nearbyPlaces.length == this.placesCount) {
               this.nearbyPlacesSubject.next(this.nearbyPlaces);
             }
           })
@@ -58,7 +61,7 @@ export class PlaceService {
           });
       } else {
         this.nearbyPlaces.push(place);
-        if (this.nearbyPlaces.length == size) {
+        if (this.nearbyPlaces.length == this.placesCount) {
           this.nearbyPlacesSubject.next(this.nearbyPlaces);
         }
       }
@@ -79,8 +82,8 @@ export class PlaceService {
 
   public queryPlaces() {
     /** Returns a list of places for an event. */
-
     this.nearbyPlaces = [];
+    this.placesCount = 0;
 
     this.geolocation.getCurrentPosition().then((resp) => {
 
@@ -90,8 +93,9 @@ export class PlaceService {
       };
 
       let types = [
-        'restaurant',
         'school',
+        'restaurant',
+        'cafe'
       ];
 
       types.forEach(type => {
@@ -104,7 +108,7 @@ export class PlaceService {
 
         this.http.get(PlaceService.PLACES_API_NEARBY_PATH, params, {}).then(
           (response) => {
-            this.parseJsonToPlaceObjects(JSON.parse(response.data), types.length * 20);
+            this.parseJsonToPlaceObjects(JSON.parse(response.data));
           })
           .catch((error) => {
             console.log(error);

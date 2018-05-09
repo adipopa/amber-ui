@@ -51,9 +51,10 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
+$button-md-height: 4.2rem;
 $button-md-background-color: color($colors, secondary, base);
 
-$toolbar-md-title-font-size: 1.6rem;
+$toolbar-md-title-font-size: 1.8rem;
 
 $spinner-md-crescent-color: white;
 
@@ -68,6 +69,8 @@ $tabs-md-background: color($colors, primary, base);
 $tabs-md-tab-icon-color: white;
 $tabs-md-tab-icon-color-active: color($colors, secondary, base);
 $tabs-md-tab-min-height: 52px;
+
+$refresher-border-color: transparent;
 
 // App Windows Variables
 // --------------------------------------------------

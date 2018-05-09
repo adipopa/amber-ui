@@ -15,4 +15,17 @@
 
 <ion-content padding>
 
+  <ion-refresher [enabled]="!isLoading" (ionRefresh)="refreshNotifications($event)">
+    <ion-refresher-content pullingIcon="refresh"
+                           pullingText="Pull to refresh notifications">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="notifications.length == 0 && !isLoading" class="tip">
+    <h5>No recent notifications.</h5>
+    <p>The notifications that you receive throughout the app will be displayed here.</p>
+  </div>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
 </ion-content>

@@ -1,3 +1,35 @@
 page-people {
 
+  ion-content {
+    text-align: left !important;
+
+    .scroll-content {
+      padding: 20px 0 32px !important;
+    }
+
+    ion-list {
+      margin-bottom: 0 !important;
+
+      .item {
+        width: 100%;
+        padding: 0 20px !important;
+
+        .item-inner {
+          margin-left: 16px !important;
+        }
+
+        ion-icon {
+          font-size: 4.6rem !important;
+        }
+
+        ion-label {
+          margin: 0 !important
+        }
+
+        h2 {
+          font-size: 18px !important;
+        }
+      }
+    }
+  }
 }
