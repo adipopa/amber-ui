@@ -1,0 +1,19 @@
+page-feed {
+
+  ion-content {
+
+    .scroll-content {
+      padding: 20px 0 32px !important;
+    }
+
+    ion-fab[bottom] {
+      right: 16px !important;
+      bottom: 16px !important;
+
+      button {
+        width: 52px;
+        height: 52px;
+      }
+    }
+  }
+}

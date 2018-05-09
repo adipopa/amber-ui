@@ -1,0 +1,32 @@
+event-card {
+
+  ion-card {
+
+    .card-image {
+      height: 136px;
+      background: url("../assets/imgs/default-card.png") no-repeat 50% 50%;
+      background-size: cover;
+    }
+
+    ion-item {
+
+      span.eta {
+        color: #388E3C !important;
+      }
+
+      h2 {
+        font-size: 16px !important;
+        font-weight: 400 !important;
+      }
+
+      p {
+        font-size: 13px !important;
+      }
+
+      .item-inner {
+        margin-left: 10px !important;
+      }
+    }
+  }
+
+}

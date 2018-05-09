@@ -1,0 +1,6 @@
+<ion-chip [color]="isSelected ? 'secondary' : 'primary'" #chip>
+  <ion-label (click)="select(chip)">{{ label }}</ion-label>
+  <button *ngIf="selectable && isSelected" ion-button color="light" [clear]="true" (click)="remove()">
+    <ion-icon name="close-circle"></ion-icon>
+  </button>
+</ion-chip>

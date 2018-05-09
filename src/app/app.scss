@@ -14,3 +14,85 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// Amber custom global CSS styles and classes
+
+.button-md {
+  margin: 0 !important;
+}
+
+ion-buttons {
+  margin: 0 !important;
+}
+
+ion-item.item-input,.item-select {
+
+  padding-left: 0 !important;
+
+  .item-inner {
+    padding-right: 0 !important;
+  }
+}
+
+.toolbar-title {
+  padding-left: 6px !important;
+}
+
+ion-navbar.solid, ion-toolbar.solid {
+
+  .toolbar-background-md {
+    background-color: #fff !important;
+  }
+
+  .toolbar-title-md {
+    color: #000 !important;
+  }
+}
+
+ion-navbar.transparent, ion-toolbar.transparent {
+
+  .toolbar-background-md {
+    background-color: transparent !important;
+  }
+
+  .toolbar-title-md {
+    color: #fff !important;
+  }
+
+  .bar-button-md {
+    color: #fff !important;
+  }
+}
+
+ion-navbar.accent, ion-toolbar.accent {
+
+  .toolbar-background-md {
+    background-color: color($colors, primary, base) !important;
+  }
+
+  .toolbar-title-md {
+    color: #fff !important;
+  }
+}
+
+ion-tabs {
+
+  .header, .tabbar {
+    margin: 8px 0;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.21), 0 -2px 4px 0 rgba(0, 0, 0, 0.21);
+  }
+}
+
+ion-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 12%;
+}
+
+ion-spinner * {
+  width: 100%;
+  height: 100%;
+}

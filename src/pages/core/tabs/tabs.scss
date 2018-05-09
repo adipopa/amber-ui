@@ -1,0 +1,72 @@
+page-tabs {
+
+  ion-header.profile-header {
+    top: 4px;
+
+    .toolbar-md {
+      min-height: 44px;
+    }
+
+    ion-icon {
+      font-size: 3.5rem !important;
+    }
+  }
+
+  .tabbar {
+
+    ion-icon {
+      font-size: 2.6rem !important;
+    }
+  }
+
+  ion-footer.search-footer {
+    bottom: 4px;
+
+    .toolbar-md {
+      min-height: 44px;
+    }
+
+    ion-icon {
+      font-size: 2.4rem !important;
+    }
+  }
+
+  .profile-button, .search-button {
+    background-color: transparent;
+    margin-left: 8px !important;
+  }
+
+  .logo-button {
+    background-color: transparent;
+    margin-right: 8px !important;
+  }
+
+  .fixed-content {
+    margin: 60px 0 !important;
+  }
+
+  ion-refresher {
+    top: 60px !important;
+  }
+
+  div.tip {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    text-align: center;
+
+    h5 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .spinner-md-crescent circle {
+    stroke: color($colors, secondary, base) !important;
+  }
+}

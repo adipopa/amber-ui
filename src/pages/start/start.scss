@@ -1,0 +1,22 @@
+page-start {
+
+  ion-content {
+    background: url("../assets/imgs/background.jpg") no-repeat center center;
+    background-size: cover;
+
+    div [ion-fixed] {
+      height: 100%;
+      width: 100%;
+
+      img {
+        position: absolute;
+        top: 8%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: auto;
+        height: 30%;
+      }
+    }
+  }
+
+}

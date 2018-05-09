@@ -1,0 +1,96 @@
+<!--
+  Generated template for the CreateEventPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create an event</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-grid no-padding>
+    <h4>Complete the event details.</h4>
+    <p>Hit the publish button when everything's ready.</p>
+    <form [formGroup]="eventForm">
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col col-12 style="padding: 0 20px; margin-bottom: 16px">
+            <ion-item>
+              <ion-label floating>Event name</ion-label>
+              <ion-input type="text" [formControl]="eventForm.controls['title']"
+                         [(ngModel)]="event.title"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-list no-lines class="details-list">
+              <ion-list no-lines formGroupName="busyTimeStart">
+                <ion-item class="item-left">
+                  <ion-label>
+                    <ion-icon name="time"></ion-icon>
+                  </ion-label>
+                  <ion-datetime type="date" placeholder="Start Date" min="2016" max="2072-12-31"
+                                displayFormat="DDD D MMM, YYYY" pickerFormat="D MMM YYYY"
+                                formControlName="startDate" [(ngModel)]="event.busyTime.startDate">
+                  </ion-datetime>
+                </ion-item>
+                <ion-item class="item-right">
+                  <ion-datetime type="date" placeholder="Start Time"
+                                displayFormat="HH:mm" pickerFormat="HH:mm"
+                                formControlName="startTime" [(ngModel)]="event.busyTime.startTime">
+                  </ion-datetime>
+                </ion-item>
+              </ion-list>
+              <ion-list no-lines formGroupName="busyTimeEnd">
+                <ion-item class="item-left">
+                  <ion-label>
+                    <ion-icon name="none"></ion-icon>
+                  </ion-label>
+                  <ion-datetime type="date" placeholder="End Date" min="2016" max="2072-12-31"
+                                displayFormat="DDD D MMM, YYYY" pickerFormat="D MMM YYYY"
+                                formControlName="endDate" [(ngModel)]="event.busyTime.endDate">
+                  </ion-datetime>
+                </ion-item>
+                <ion-item class="item-right">
+                  <ion-datetime type="date" placeholder="End Time"
+                                displayFormat="HH:mm" pickerFormat="HH:mm"
+                                formControlName="endTime" [(ngModel)]="event.busyTime.endTime">
+                  </ion-datetime>
+                </ion-item>
+              </ion-list>
+              <button ion-item (click)="selectPlace()">
+                <ion-label>
+                  <ion-icon name="pin"></ion-icon>
+                </ion-label>
+                <ion-input type="text" [value]="event.place.name || 'Location'" [readonly]="true"
+                           [disabled]="!event.place.id"></ion-input>
+              </button>
+              <ion-item ion-item>
+                <ion-label>
+                  <ion-icon name="create"></ion-icon>
+                </ion-label>
+                <ion-textarea type="text" rows="1" maxlength="256" placeholder="Description"
+                              [formControl]="eventForm.controls['description']" [(ngModel)]="event.description">
+                </ion-textarea>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+    <ion-row align-items-end class="flex-buttons">
+      <ion-col col-12>
+        <button ion-button (click)="onCreateEvent()">Publish</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

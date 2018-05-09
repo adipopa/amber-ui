@@ -1,0 +1,16 @@
+<h4>All right, {{ userDetails.firstName + ' ' + userDetails.lastName }}</h4>
+<p *ngIf="selectedInterests.length > 0; else noInterests">Looks like you're all set. These are your choices: </p>
+<ng-template #noInterests>
+  <p>Looks like you didn't choose any interests, you can always set them later.</p>
+</ng-template>
+<ion-grid>
+  <ion-row *ngFor="let interest of selectedInterests">
+    <ion-col col-12>
+      <ion-label>{{ interest.category }}</ion-label>
+      <ion-list>
+        <chip *ngFor="let option of interest.options" [label]="option.label" [selectable]="false"></chip>
+      </ion-list>
+      <hr>
+    </ion-col>
+  </ion-row>
+</ion-grid>

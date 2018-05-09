@@ -1,0 +1,55 @@
+page-intro {
+
+  ion-content {
+    background: url("../assets/imgs/background.jpg") no-repeat center center;
+    background-size: cover;
+
+    div [ion-fixed] {
+      width: 100%;
+
+      ion-grid {
+        height: 100%;
+
+        .title-content {
+          margin-top: 48px;
+        }
+
+        .center-content {
+          height: calc(100vh - 342px);
+        }
+
+        .bottom-content {
+          margin-top: 32px;
+        }
+
+        button {
+          width: 100%;
+        }
+
+        h5, h4, h2, h1, p {
+          color: #fff;
+          text-align: center;
+          margin: 0;
+        }
+
+        p {
+          font-weight: bold;
+          font-size: 16px;
+        }
+
+        h5 {
+          margin-bottom: 48px !important;
+          font-size: 18px;
+        }
+
+        h2 {
+          font-size: 28px;
+        }
+
+        h1 {
+          font-size: 56px;
+        }
+      }
+    }
+  }
+}

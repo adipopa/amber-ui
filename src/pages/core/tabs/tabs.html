@@ -1,0 +1,38 @@
+<ion-header no-border class="profile-header">
+
+  <ion-toolbar class="solid">
+    <ion-buttons left>
+      <button class="profile-button" (click)="onProfile()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{ currentUser.firstName + ' ' + currentUser.lastName }}</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab [root]="tab1Root" [rootParams]="{coreCtrl: this.navCtrl}" tabIcon="flame"></ion-tab>
+    <ion-tab [root]="tab2Root" [rootParams]="{coreCtrl: this.navCtrl}" tabIcon="paper-plane"></ion-tab>
+    <ion-tab [root]="tab3Root" tabIcon="notifications"></ion-tab>
+    <ion-tab [root]="tab4Root" tabIcon="people"></ion-tab>
+  </ion-tabs>
+</ion-content>
+
+<ion-footer no-border class="search-footer">
+
+  <ion-toolbar class="solid">
+    <ion-buttons left>
+      <button ion-button class="search-button">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button class="logo-button">
+        <img src="assets/icon/favicon.ico" width="auto" height="24px">
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-footer>
