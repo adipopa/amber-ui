@@ -5,6 +5,8 @@ import { Geolocation } from "@ionic-native/geolocation";
 
 import { Place } from '@models/place.model';
 
+import { ToastService } from '@services/toast.service';
+
 import { Subject } from 'rxjs/Subject';
 
 import { environment } from '@environment';
@@ -29,7 +31,7 @@ export class PlaceService {
 
   public nearbyPlacesSubject: Subject<Place[]> = new Subject<Place[]>();
 
-  constructor(private http: HTTP, private geolocation: Geolocation) {
+  constructor(private http: HTTP, private geolocation: Geolocation, private toastService: ToastService) {
     console.log('Hello PlaceService Provider');
   }
 
@@ -85,7 +87,9 @@ export class PlaceService {
     this.nearbyPlaces = [];
     this.placesCount = 0;
 
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition({timeout: 5000, enableHighAccuracy: true}).then((resp) => {
+
+      this.toastService.dismissLocationErrorToast();
 
       let currLocation = {
         lat: resp.coords.latitude,
@@ -116,7 +120,11 @@ export class PlaceService {
       });
 
     }).catch(error => {
-      console.log(error)
+      console.log(error);
+      this.toastService.presentLocationErrorToast();
+      setTimeout(() => {
+        this.queryPlaces();
+      }, 3000);
     });
   }
 

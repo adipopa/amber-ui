@@ -15,7 +15,7 @@
 
 <ion-content>
 
-  <ion-refresher (ionRefresh)="refreshAvailableEvents($event)">
+  <ion-refresher [enabled]="!isLoading" (ionRefresh)="refreshAvailableEvents($event)">
     <ion-refresher-content pullingIcon="refresh"
                            pullingText="Pull to refresh feed">
     </ion-refresher-content>

@@ -4,15 +4,14 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { Geolocation } from "@ionic-native/geolocation";
 import { HTTP } from '@ionic-native/http';
+import { Geolocation } from "@ionic-native/geolocation";
+import { Network } from '@ionic-native/network';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Pro } from '@ionic/pro';
-
-import { SocketIoConfig, SocketIoModule } from "ng-socket-io";
 
 import { AmberApp } from './app.component';
 
@@ -54,8 +53,6 @@ export class AmberErrorHandler implements ErrorHandler {
   }
 }
 
-const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options: {}};
-
 @NgModule({
   declarations: [
     AmberApp,
@@ -64,7 +61,6 @@ const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options
   imports: [
     BrowserModule,
     IonicModule.forRoot(AmberApp, {tabsHideOnSubPages: true}),
-    SocketIoModule.forRoot(config),
     AuthModule,
     CoreModule
   ],
@@ -78,8 +74,9 @@ const config: SocketIoConfig = {url: "https://ember-api.herokuapp.com/", options
     SplashScreen,
     IonicErrorHandler,
     {provide: ErrorHandler, useClass: AmberErrorHandler},
-    Geolocation,
     HTTP,
+    Geolocation,
+    Network,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHeaderInterceptor,

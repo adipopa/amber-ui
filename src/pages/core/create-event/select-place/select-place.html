@@ -22,7 +22,7 @@
         <ion-list radio-group [(ngModel)]="selectedPlace">
           <ion-item *ngFor="let place of nearbyPlaces">
             <ion-label>{{ place.name }}</ion-label>
-            <ion-radio [value]="place"
+            <ion-radio [value]="place" [disabled]="loadingMap"
                        (ionSelect)="onSelectPlace(place)">
             </ion-radio>
           </ion-item>
