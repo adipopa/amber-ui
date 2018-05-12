@@ -5,6 +5,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { Event } from '@models/event.model';
 
+import { ToastService } from '@services/toast.service';
+
 import { Subject } from 'rxjs/Subject';
 
 import { environment } from '@environment';
@@ -27,12 +29,15 @@ export class EventService {
 
   static readonly EVENT_SEARCH_RADIUS = '15';
 
-  constructor(private http: HttpClient, private geolocation: Geolocation) {
+  constructor(private http: HttpClient, private geolocation: Geolocation, private toastService: ToastService) {
     console.log('Hello EventService Provider');
   }
 
   getEventsAvailableToUser() {
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition({timeout: 5000, enableHighAccuracy: true}).then((resp) => {
+
+      this.toastService.dismissLocationErrorToast();
+
       let currLocation = {
         lat: resp.coords.latitude.toString(),
         lng: resp.coords.longitude.toString()
@@ -51,6 +56,12 @@ export class EventService {
           console.log(error);
         }
       );
+    }).catch((error) => {
+      console.log(error);
+      this.toastService.presentLocationErrorToast();
+      setTimeout(() => {
+        this.getEventsAvailableToUser();
+      }, 3000);
     });
   }
 
@@ -68,7 +79,10 @@ export class EventService {
   }
 
   getUserEvents() {
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition({timeout: 5000, enableHighAccuracy: true}).then((resp) => {
+
+      this.toastService.dismissLocationErrorToast();
+
       let currLocation = {
         lat: resp.coords.latitude.toString(),
         lng: resp.coords.longitude.toString()
@@ -86,6 +100,12 @@ export class EventService {
           console.log(error);
         }
       );
+    }).catch((error) => {
+      console.log(error);
+      this.toastService.presentLocationErrorToast();
+      setTimeout(() => {
+        this.getUserEvents();
+      }, 3000);
     });
   }
 

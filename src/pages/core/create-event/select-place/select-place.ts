@@ -7,6 +7,8 @@ import { Place } from '@models/place.model';
 
 import { PlaceService } from '@services/place.service';
 
+import { ToastService } from '@services/toast.service';
+
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -39,9 +41,10 @@ export class SelectPlacePage {
   private lastInfoWindow = null;
 
   public isLoading = true;
+  public loadingMap = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              private placeService: PlaceService, private geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation: Geolocation,
+              private placeService: PlaceService, private toastService: ToastService) {
   }
 
   ionViewDidLoad() {
@@ -59,6 +62,7 @@ export class SelectPlacePage {
           if(a.name > b.name) return 1;
           return 0;
         });
+        this.loadingMap = true;
         this.loadMap();
         this.isLoading = false;
         this.nearbyPlacesSubscription.unsubscribe();
@@ -73,7 +77,9 @@ export class SelectPlacePage {
   }
 
   loadMap() {
-    this.geolocation.getCurrentPosition().then((position) => {
+    this.geolocation.getCurrentPosition({timeout: 5000, enableHighAccuracy: true}).then((position) => {
+
+      this.toastService.dismissLocationErrorToast();
 
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
@@ -89,8 +95,14 @@ export class SelectPlacePage {
         this.addMarker(place);
       });
 
-    }).catch(error => {
-      console.log(error)
+      this.loadingMap = false;
+
+    }).catch((error) => {
+      console.log(error);
+      this.toastService.presentLocationErrorToast();
+      setTimeout(() => {
+        this.loadMap();
+      }, 3000);
     });
 
   }
